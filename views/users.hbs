@@ -1,0 +1,16 @@
+<h1>Users Page</h1>
+
+{{#if users.length}}
+<ul>
+  {{#each users}}
+    <li>
+      <label>
+        <span>{{username}}</span>
+        <span>{{roles}}</span>
+      </label>
+    </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>No Users!</p>
+{{/if}}

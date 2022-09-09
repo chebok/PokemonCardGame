@@ -39,8 +39,17 @@ test('playerturn', () => {
 
 test('botturn', () => {
   const pokemon1 = gameInstance.state.playerPokemons[0];
+  const pokemon2 = gameInstance.state.playerPokemons[1];
+  gameInstance.botTurn();
+  gameInstance.botTurn();
+  gameInstance.botTurn();
+  gameInstance.botTurn();
+  gameInstance.botTurn();
+  gameInstance.botTurn();
   gameInstance.botTurn();
   gameInstance.botTurn();
   console.log(gameInstance.log.join('\n'));
   expect(pokemon1.status).toEqual('dead');
+  expect(pokemon2.status).toEqual('dead');
+  expect(gameInstance.state.phase).toEqual('finish');
 });

@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const authRouter = require('./authRouter');
-
+require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
 

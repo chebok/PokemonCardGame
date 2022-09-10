@@ -39,6 +39,7 @@ bower_components
 build/Release
 
 # Dependency directories
+client/node_modules/
 node_modules/
 jspm_packages/
 
@@ -128,3 +129,46 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# misc
+.vscode/
+.DS_Store
+
+client/.DS_Store
+
+client/.env
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+client/scripts/flow/*/.flowconfig
+client/.flowconfig
+client/client/*~
+client/*.pyc
+client/.grunt
+client/_SpecRunner.html
+client/__benchmarks__
+client/build/
+client/remote-repo/
+client/coverage/
+client/.module-cache
+client/fixtures/dom/public/react-dom.js
+client/fixtures/dom/public/react.js
+client/test/the-files-to-test.generated.js
+client/*.log*
+client/chrome-user-data
+client/*.sublime-project
+client/*.sublime-workspace
+client/.idea
+client/*.iml
+client/.vscode
+client/*.swp
+client/*.swo
+client/.cache/
+client/dist/
+client/.vscode/

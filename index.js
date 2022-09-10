@@ -32,7 +32,7 @@ const start = async () => {
     try {
       await mongoose.connect('mongodb+srv://Chebok:202Seldon@cluster0.h58165t.mongodb.net/mongo-node-app', {
         useNewUrlParser: true,
-      })
+      });
       app.listen(PORT, () => {
           console.log(`Server has been started... on port ${PORT}`);
       })

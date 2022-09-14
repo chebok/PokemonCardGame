@@ -3,23 +3,23 @@ const Pokemon = {
 };
 
 const callback = (pok, time) => {
-  console.log(pok.turn, time);
+  console.log(pok.turn, `Шкала заполнена на ${time}%`);
 }
 
 const startTimer = (pokemon, totalTime, cb) => {
   pokemon.turn = 'wait';
-  let elapsedTime = 0;
+  let line = 0;
   const step = () => {
-    elapsedTime += 100;
-    cb(pokemon, elapsedTime);
+    line += 10;
+    cb(pokemon, line);
   };
-  const intervalId = setInterval(step, 100);
+  const intervalId = setInterval(step, 1000);
   const f = () => {
     pokemon.turn = 'ready';
     clearInterval(intervalId);
-    cb(pokemon, totalTime);
+    cb(pokemon, 100);
   };
   setTimeout(f, totalTime);
 };
 
-startTimer(Pokemon, 1000, callback);
+startTimer(Pokemon, 10000, callback);

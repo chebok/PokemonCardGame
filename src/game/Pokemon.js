@@ -1,12 +1,14 @@
 const ratio = require('./ratio');
 
 class Pokemon {
-  constructor(name, element, health, damage) {
+  constructor(name, element, health, damage, speed) {
     this.name = name;
     this.element = element;
     this.health = health;
     this.damage = damage;
+    this.speed = speed;
     this.status = 'alive';
+    this.moveStatus = 'wait';
   }
 
   attack(target) {

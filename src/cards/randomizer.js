@@ -8,7 +8,7 @@ const statsRandomizer = () => {
     speed,
     damage,
   };
-  console.log(result);
   return result;
 };
-statsRandomizer();
+
+module.exports = statsRandomizer;

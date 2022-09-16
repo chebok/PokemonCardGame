@@ -1,30 +1,14 @@
-const mappingElements = {
-  water: {
-    water: 1,
-    fire: 1.5,
-    air: 1,
-    earth: 0.5,
-  },
-  fire: {
-    water: 0.5,
-    fire: 1,
-    air: 1.5,
-    earth: 1,
-  },
-  earth: {
-    water: 1.5,
-    fire: 1,
-    air: 0.5,
-    earth: 1,
-  },
-  air: {
-    water: 1,
-    fire: 0.5,
-    air: 1,
-    earth: 1.5,
-  },
-};
+const mappingElements = [
+  'Grass', 'Fire',
+  'Water', 'Bug',
+  'Normal', 'Poison',
+  'Electric', 'Ground',
+  'Fairy', 'Fighting',
+  'Psychic', 'Rock',
+  'Ghost', 'Ice',
+  'Dragon',
+];
 
-const ratio = (elem1, elem2) => mappingElements[elem1][elem2];
+const ratio = () => 1;
 
 module.exports = ratio;

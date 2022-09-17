@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "node server/index.js",
     "dev": "nodemon server/index.js"
+=======
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "client": "cd client && npm install && npm start",
+    "build": "cd client && npm install && npm run build"
+>>>>>>> origin/development
   },
   "repository": {
     "type": "git",

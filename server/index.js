@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
@@ -10,8 +11,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use('/', authRouter);
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get('/', (req, res) => {
   try {
@@ -19,9 +19,17 @@ app.get('/', (req, res) => {
       title: 'Pokemons',
     });
   } catch (error) {
-
+    console.log(error);
   }
 });
+app.get('/api', (req, res) => {
+  res.json({ message: 'Hello from server, my Pokemon friend!' });
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
+
+app.use('/', authRouter);
 
 const hbs = exphbs.create({
   defaultLayout: 'main',

@@ -14,5 +14,4 @@ router.get('/users', controller.getUsers);
 router.get('/registration', controller.createUser);
 router.get('/login', controller.loginUser);
 
-
 module.exports = router;

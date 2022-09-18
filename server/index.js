@@ -1,7 +1,7 @@
-const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
+const path = require('node:path');
 const authRouter = require('./authRouter');
 require('dotenv').config();
 
@@ -24,9 +24,9 @@ app.get('/', (req, res) => {
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from server, my Pokemon friend!' });
 });
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+// });
 
 app.use('/', authRouter);
 

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const path = require('node:path');
@@ -8,6 +9,14 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+const corsOptions = {
+  origin: process.env.ORIGIN || 'http://localhost:3000',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -28,7 +37,7 @@ app.get('/api', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 // });
 
-app.use('/', authRouter);
+app.use('/auth/', authRouter);
 
 const hbs = exphbs.create({
   defaultLayout: 'main',

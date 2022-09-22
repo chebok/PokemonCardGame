@@ -1,21 +1,41 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
+import AppLayout from './components/AppLayout';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import Login from './components/Login';
+import Register from './components/Register';
+
 import './App.css';
 
 function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Pokeball.png" className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
+      {/* <Routes>
+        <Route path='/' element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route>
+            <Route path='profile' element={<Profile />} />
+            <Route path='register' element={<Register />} />
+            <Route path='login' element={<Login />} />
+          </Route>
+        </Route>
+      </Routes> */}
+      <Routes>
+        <Route path='/' element={<AppLayout />}>
+          <Route index element={<Home />} />
+
+          {/* Private Route */}
+          <Route>
+            <Route path='profile' element={<Profile />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Route>
+        </Route>
+        <Route path='register' element={<Register />} />
+        <Route path='login' element={<Login />} />
+      </Routes>
     </div>
   );
 }

@@ -17,10 +17,8 @@ class AuthService {
   }
 
   async register(username, password) {
-    const response = await axios.post(`${API_URL}/register`, {
-      username,
-      password,
-    });
+    const response = await axios
+    .post(`${API_URL}/register`, { username, password });
     if (response.data.accessToken) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }

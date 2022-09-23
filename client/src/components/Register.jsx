@@ -30,7 +30,7 @@ const Register = () => {
     if (!isError) {
       dispatch(register(username, password))
         .then(() => {
-          navigate('/profile');
+          navigate('/');
           setIsError(false);
         })
         .catch(() => {

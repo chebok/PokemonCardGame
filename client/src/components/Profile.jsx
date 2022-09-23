@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import CardsCollection from './CardsCollection';
 
 export default function Profile() {
   const auth = useSelector((store) => store.auth);
@@ -44,6 +45,7 @@ export default function Profile() {
         {user?.roles &&
           user?.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul>
+      <CardsCollection />
     </div>
   )
 };

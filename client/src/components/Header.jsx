@@ -9,6 +9,7 @@ import { clearMessage } from '../redux/actions/message';
 const Header = () => {
   const auth = useSelector((store) => store.auth);
   const dispatch = useDispatch();
+  const { user } = auth;
 
   const loggedInMenuItems = [
     {
@@ -45,7 +46,6 @@ const Header = () => {
       label: (<a href="/">Home</a>),
     },
   ];
-  const { user } = auth;
 
   const logoutUser = () => {
     dispatch(logout());

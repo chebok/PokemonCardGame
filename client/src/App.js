@@ -1,40 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import Login from './components/Login';
-import Register from './components/Register';
+import HomePage from './components/HomePage';
+import ProfilePage from './components/ProfilePage';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
+import GamePage from './components/GamePage';
 
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      {/* <Routes>
-        <Route path='/' element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route>
-            <Route path='profile' element={<Profile />} />
-            <Route path='register' element={<Register />} />
-            <Route path='login' element={<Login />} />
-          </Route>
-        </Route>
-      </Routes> */}
       <Routes>
         <Route path='/' element={<AppLayout />}>
-          <Route index element={<Home />} />
-
-          {/* Private Route */}
+          <Route index element={<HomePage />} />
           <Route>
-            <Route path='profile' element={<Profile />} />
-            <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
+            <Route path='profile' element={<ProfilePage />} />
+            <Route path='login' element={<LoginPage />} />
+            <Route path='register' element={<RegisterPage />} />
           </Route>
         </Route>
-        <Route path='register' element={<Register />} />
-        <Route path='login' element={<Login />} />
+        <Route path='game' element={<GamePage />} />
+        <Route path='register' element={<RegisterPage />} />
+        <Route path='login' element={<LoginPage />} />
       </Routes>
     </div>
   );

@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../redux/actions/auth';
-// import { useHistory } from 'react-router-dom';
+import { register } from '../redux/actions/auth';
 import { Button, Form, Input, Typography } from 'antd';
 
-const Login = () => {
+export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const auth = useSelector((store) => store.auth);
   const message = useSelector((store) => store.message);
   const dispatch = useDispatch();
-  // const history = useHistory();
   const navigate = useNavigate();
+
+  console.log('auth in Reg', auth);
+  console.log('authisLoggedIn in Reg', auth.isLoggedIn);
 
   useEffect(() => {
     if (auth.isLoggedIn) {
@@ -22,16 +23,20 @@ const Login = () => {
     }
   }, [auth, navigate]);
 
+  useEffect(() => {
+    setErrorMessage(message.message);
+  }, [message]);
+
   const onFinish = (values) => {
     const { username, password } = values;
 
     setIsLoading(true);
-
+    console.log('isError', isError);
     if (!isError) {
-      dispatch(login(username, password))
+      dispatch(register(username, password))
         .then(() => {
-          // history.push('/profile');
           navigate('/');
+          setIsError(false);
         })
         .catch(() => {
           setIsLoading(false);
@@ -136,16 +141,14 @@ const Login = () => {
         </Form>
         <Typography>
           Already have an account?{' '}
-          <Link to='/register'>Register Here</Link>
+          <Link to='/login'>Login Here</Link>
         </Typography>
-        {message && (
+        {errorMessage && (
           <Typography className='errorMessage' role='alert'>
-            {message.message}
+            {errorMessage}
           </Typography>
         )}
       </div>
     </div>
   );
 };
-
-export default Login;

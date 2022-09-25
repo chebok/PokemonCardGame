@@ -1,4 +1,4 @@
-const Pokemon = require('./Pokemon');
+import Pokemon from './Pokemon.js';
 
 const createPokemons = (cards) => {
   const result = cards
@@ -6,4 +6,4 @@ const createPokemons = (cards) => {
   return result;
 };
 
-module.exports = createPokemons;
+export default createPokemons;

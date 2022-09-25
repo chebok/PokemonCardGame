@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken');
-const { secret } = require('../config');
+import jwt from 'jsonwebtoken';
 
-module.exports = function (req, res, next) {
+const secret = process.env.SECRET;
+
+const authMiddleware = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     next();
   }
@@ -24,4 +25,6 @@ module.exports = function (req, res, next) {
     console.log(e);
     return res.status(403).json({ message: 'Пользователь не авторизован' });
   }
-}
+};
+
+export default authMiddleware;

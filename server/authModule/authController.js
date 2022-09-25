@@ -1,40 +1,21 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
-const Role = require('./models/Role');
-const User = require('./models/User');
-const { secret } = require('./config');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
+import Role from '../models/Role.js';
+import User from '../models/User.js';
+import Collection from '../models/Collection.js';
+import Deck from '../models/Deck.js';
+import generateRandomCards from './generateRandomCards.js';
 
 const generateAccessToken = (id, roles) => {
   const payload = {
     id,
     roles,
   };
-  return jwt.sign(payload, secret, { expiresIn: '24h' });
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: '24h' });
 };
 
 class AuthController {
-  async createUser(req, res) {
-    try {
-      res.render('create', {
-        title: 'Registration',
-
-      });
-    } catch (error) {
-
-    }
-  }
-
-  async loginUser(req, res) {
-    try {
-      res.render('login', {
-        title: 'Login',
-      });
-    } catch (error) {
-
-    }
-  }
-
   async register(req, res) {
     try {
       const errors = validationResult(req);
@@ -51,9 +32,13 @@ class AuthController {
       const hashPassword = bcrypt.hashSync(password, 7);
       const userRole = await Role.findOne({ value: 'USER' });
       const user = new User({ username, password: hashPassword, roles: [userRole.value] });
-
       await user.save();
-
+      const cards = generateRandomCards();
+      const collection = new Collection({ userId: user._id, cards });
+      await collection.save();
+      const deck = new Deck({ userId: user._id, cards });
+      await deck.save();
+      console.log(user);
       const token = generateAccessToken(user._id, user.roles);
       const authorities = [];
 
@@ -111,15 +96,11 @@ class AuthController {
       // await userRole.save();
       // await adminRole.save();
       const users = await User.find({}).lean();
-      res.render('users', {
-        mainTitle: 'Users list',
-        isIndex: true,
-        users,
-      });
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
   }
 }
 
-module.exports = new AuthController();
+export default new AuthController();

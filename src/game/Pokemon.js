@@ -1,4 +1,4 @@
-const ratio = require('./ratio');
+import ratio from './ratio.js';
 
 class Pokemon {
   constructor(name, element, health, damage, speed) {
@@ -7,8 +7,8 @@ class Pokemon {
     this.health = health;
     this.damage = damage;
     this.speed = speed;
-    this.status = 'alive';
-    this.moveStatus = 'wait';
+    this.isAlive = true;
+    this.isReadyToMove = false;
   }
 
   attack(target) {
@@ -18,8 +18,8 @@ class Pokemon {
 
   takeDamage(amount) {
     this.health -= amount;
-    this.status = this.health <= 0 ? 'dead' : this.status;
+    this.isAlive = this.health <= 0 ? false : this.isAlive;
   }
 }
 
-module.exports = Pokemon;
+export default Pokemon;

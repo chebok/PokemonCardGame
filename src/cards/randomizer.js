@@ -11,4 +11,4 @@ const statsRandomizer = () => {
   return result;
 };
 
-module.exports = statsRandomizer;
+export default statsRandomizer;

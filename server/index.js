@@ -1,11 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const exphbs = require('express-handlebars');
-const path = require('node:path');
-const authRouter = require('./authRouter');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import exphbs from 'express-handlebars';
+import path from 'node:path';
+import * as dotenv from 'dotenv';
+import authRouter from './authModule/authRouter.js';
+import collectionRouter from './collectionModule/collectionRouter.js';
+import deckRouter from './deckModule/deckRouter.js';
 
+dotenv.config();
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -37,7 +41,9 @@ app.get('/api', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 // });
 
-app.use('/auth/', authRouter);
+app.use('/auth', authRouter);
+app.use('/collection', collectionRouter);
+app.use('/deck', deckRouter);
 
 const hbs = exphbs.create({
   defaultLayout: 'main',

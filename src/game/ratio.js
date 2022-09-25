@@ -11,4 +11,4 @@ const mappingElements = [
 
 const ratio = () => 1;
 
-module.exports = ratio;
+export default ratio;

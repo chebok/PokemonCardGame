@@ -1,10 +1,16 @@
-const fs = require('node:fs/promises');
+import fs from 'node:fs/promises';
+import statsRandomizer from './randomizer.js';
 
 const fixer = async () => {
   const data = await fs.readFile('./result.json');
   const result = JSON.parse(data);
-  // Тут что-то делать с базой
-  await fs.writeFile('./result.json', JSON.stringify(result));
+  const newResult = result.map((pokemon) => {
+    return {
+      ...pokemon,
+      ...statsRandomizer(),
+    }
+  });
+  await fs.writeFile('./resultWithStats.json', JSON.stringify(newResult));
 };
 
 fixer();

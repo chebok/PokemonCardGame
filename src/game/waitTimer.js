@@ -1,13 +1,9 @@
-const Pokemon = {
-  moveStatus: 'ready',
-};
-
 const callback = (pok, time) => {
-  console.log(pok.moveStatus, `Шкала заполнена на ${time}%`);
+  console.log(pok.isReadyToMove, `Шкала заполнена на ${time}%`);
 }
 
 const waitTimer = (pokemon, cb1 = () => {}, cb2 = () => {}) => {
-  pokemon.moveStatus = 'wait';
+  pokemon.isReadyToMove = false;
   let line = 0;
   const step = () => {
     line += 10;
@@ -15,11 +11,11 @@ const waitTimer = (pokemon, cb1 = () => {}, cb2 = () => {}) => {
   };
   const intervalId = setInterval(step, 1000);
   const f = () => {
-    pokemon.moveStatus = 'ready';
+    pokemon.isReadyToMove = true;
     clearInterval(intervalId);
     cb1(pokemon, 100);
   };
   setTimeout(f, (10000 * 10) / pokemon.speed);
 };
 
-module.exports = waitTimer;
+export default waitTimer;

@@ -1,5 +1,5 @@
-const Game = require('./Game');
-const statsRandomizer = require('../cards/randomizer');
+import Game from './Game.js';
+import statsRandomizer from '../cards/randomizer.js';
 
 const cards = [
   {

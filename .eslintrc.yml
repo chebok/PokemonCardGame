@@ -12,4 +12,8 @@ parserOptions:
   ecmaVersion: latest
 plugins:
   - react
-rules: {}
+rules: 
+  import/extensions: # FIXME: remove when rule will be adjusted for new nodejs version
+    - error
+    - ignorePackages
+    - js: always

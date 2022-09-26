@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../redux/actions/auth';
 import { Button, Form, Input, Typography } from 'antd';
+import styled from 'styled-components';
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,28 +50,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className='formContainer'
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#fff',
-      }}
-    >
-      <div
-        className='formBox'
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          padding: '20px',
-          width: '420px',
-          backgroundColor: '#f3f3f3',
-          borderRadius: '16px',
-        }}>
+    <Container>
+      <FormBox>
+      <StyledH3>Login to your account</StyledH3>
         <Form
           name='basic'
           style={{
@@ -89,8 +71,7 @@ export default function LoginPage() {
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >
-          <Form.Item
-            label='Username'>
+          <Form.Item>
             <Form.Item
               name="username"
               noStyle
@@ -100,11 +81,11 @@ export default function LoginPage() {
                   message: 'Please input your username!',
                 }
               ]}
-            ><Input /></Form.Item>
+            ><Input placeholder={'Username'} /></Form.Item>
 
           </Form.Item>
 
-          <Form.Item label='Password'>
+          <Form.Item>
             <Form.Item
               name='password'
               min={8}
@@ -119,22 +100,22 @@ export default function LoginPage() {
                   message: 'Password minimum 4 characters'
                 },
               ]}
-            ><Input.Password /></Form.Item>
+            ><Input.Password placeholder={'Password'} /></Form.Item>
           </Form.Item>
 
           <Form.Item
             wrapperCol={{
-              offset: 8,
+              offset: 4,
               span: 16,
             }}
           >
-            <Button type='primary' htmlType='submit'>
+            <Button type='primary' htmlType='submit' loading={isLoading}>
               Submit
             </Button>
           </Form.Item>
         </Form>
         <Typography>
-          Already have an account?{' '}
+          Need an account?{' '}
           <Link to='/register'>Register Here</Link>
         </Typography>
         {errorMessage && (
@@ -142,7 +123,49 @@ export default function LoginPage() {
             {errorMessage}
           </Typography>
         )}
-      </div>
-    </div>
+      </FormBox>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+`;
+
+const FormBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 420px;
+  background-color: #f3f3f3;
+  border-radius: 16px;
+`;
+
+const StyledH3 = styled.h3`
+font-weight: 500;
+margin-bottom: 24px;
+`;
+
+// const Styledutton = styled(Button)`
+//   padding: 0.6rem 0;
+//   background-color: #f9d13e;
+//   color: #2363eb;
+//   font-weight: 500;
+//   &:hover {
+//     background-color: #ebc22c;
+//     transform: translateY(-2px);
+//   }
+// `;
+// const LinkItem = styled(Link)`
+//   text-decoration: none;
+//   color: #2363eb;
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// `;

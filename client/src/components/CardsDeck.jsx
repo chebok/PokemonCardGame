@@ -1,8 +1,9 @@
 import { Space } from 'antd';
 import PokeCard from './PokeCard';
+import styled from 'styled-components';
 
 const CardsDeck = ({ mockDeck }) => (
-  <div style={{ background: '#ECECEC', padding: '15px 30px' }}>
+  <CardsDeckWrapper>
     <Space size={[8, 16]} wrap>
       {mockDeck.map(pokemon =>
         <PokeCard
@@ -14,7 +15,12 @@ const CardsDeck = ({ mockDeck }) => (
         />
       )}
     </Space>
-  </div>
+  </CardsDeckWrapper>
 );
 
 export default CardsDeck;
+
+const CardsDeckWrapper = styled.div`
+  padding: 15px 30px;
+  background-color: #ECECEC;
+`;

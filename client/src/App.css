@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+.ant-menu {
+  background-color: transparent;
+}
+
 .App {
   text-align: center;
 }

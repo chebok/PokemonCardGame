@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { UserOutlined, LoginOutlined, LogoutOutlined, UserAddOutlined, HomeOutlined } from '@ant-design/icons';
 import { logout } from '../redux/actions/auth';
 import { clearMessage } from '../redux/actions/message';
+import styled from 'styled-components';
 
 const Header = () => {
-  const auth = useSelector((store) => store.auth);
   const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
   const { user } = auth;
 
   const loggedInMenuItems = [
@@ -59,13 +59,7 @@ const Header = () => {
   }
 
   return (
-    <div
-      className='menuContainer'
-      style={{
-        display: 'flex',
-        flexDirection: 'row'
-      }}
-    >
+    <Container>
       {user &&(
         <Menu onClick={handleMenuClick} mode='horizontal' items={loggedInMenuItems}></Menu>
       )}
@@ -107,8 +101,14 @@ const Header = () => {
           </Link>
         </Menu.Item>
       </Menu> */}
-    </div >
+    </Container >
   );
 }
 
 export default Header;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: #f3f3f3;
+`;

@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import exphbs from 'express-handlebars';
 import path from 'node:path';
 import * as dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsDoc from 'swagger-jsdoc';
 import authRouter from './authModule/authRouter.js';
 import collectionRouter from './collectionModule/collectionRouter.js';
 import deckRouter from './deckModule/deckRouter.js';
@@ -12,7 +14,28 @@ dotenv.config();
 const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'PokemonCard API',
+      version: '1.0.0',
+      description: 'simple express API',
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000',
+      },
+    ],
+  },
+  apis: ['./server/authModule/authRouter.js'],
+};
+
+const specs = swaggerJsDoc(options);
+
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const corsOptions = {
   origin: process.env.ORIGIN || 'http://localhost:3000',

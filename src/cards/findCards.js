@@ -1,13 +1,13 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 
-const cardNumbers = [1, 46, 79];
+const __dirname = path.resolve();
 
-const finder = async (cards) => {
-  const data = await fs.readFile('./resultWithStats.json');
+const findCards = async (cards) => {
+  const data = await fs.readFile(path.resolve(__dirname, 'src/cards/resultWithStats.json'));
   const parseData = JSON.parse(data);
   const result = cards.map((id) => parseData[id - 1]);
-  console.log(result);
   return result;
 };
 
-finder(cardNumbers);
+export default findCards;

@@ -4,12 +4,7 @@ import statsRandomizer from './randomizer.js';
 const fixer = async () => {
   const data = await fs.readFile('./result.json');
   const result = JSON.parse(data);
-  const newResult = result.map((pokemon) => {
-    return {
-      ...pokemon,
-      ...statsRandomizer(),
-    }
-  });
+  // Тут что-то делаем  с базой
   await fs.writeFile('./resultWithStats.json', JSON.stringify(newResult));
 };
 

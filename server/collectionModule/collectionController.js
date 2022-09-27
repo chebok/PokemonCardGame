@@ -1,5 +1,6 @@
 import Collection from '../models/Collection.js';
 import collectionValidate from './collectionValidate.js';
+import findCards from '../../src/cards/findCards.js';
 
 class CollectionController {
   async updateCollection(req, res) {
@@ -22,8 +23,9 @@ class CollectionController {
   async getCollection(req, res) {
     try {
       const { userId } = req.params;
-      const collection = await Collection.findOne({ userId }).lean();
-      res.json(collection);
+      const collection = await Collection.findOne({ userId });
+      const cardsToSend = await findCards(collection.cards);
+      res.json(cardsToSend);
     } catch (error) {
       console.log(error);
     }

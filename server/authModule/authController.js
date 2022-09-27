@@ -38,14 +38,12 @@ class AuthController {
       await collection.save();
       const deck = new Deck({ userId: user._id, cards });
       await deck.save();
-      console.log(user);
       const token = generateAccessToken(user._id, user.roles);
       const authorities = [];
 
       user.roles.forEach((role) => {
         authorities.push(role.toUpperCase());
       });
-      console.log(res);
       return res.status(200).json({
         id: user._id,
         username: user.username,

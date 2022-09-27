@@ -4,6 +4,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import roleMiddleware from '../middlewares/roleMiddleware.js';
 
 const router = new Router();
+router.get('/random', controller.getRandomDeck);
 router.put('/:userId', controller.updateDeck);
 router.get('/:userId', controller.getDeck);
 

@@ -1,9 +1,10 @@
-const botThinking = (game) => {
-  const pokemon1 = game.state.botPokemons
-    .find((pokemon) => pokemon.status === 'alive');
+const botThinking = (pokemon1, game) => {
   const pokemon2 = game.state.playerPokemons
-    .find((pokemon) => pokemon.status === 'alive');
-  return [pokemon1, pokemon2, 'attack'];
+    .find((pokemon) => pokemon.isAlive);
+  if (!pokemon2) {
+    throw new Error(`Статус игры ${game.state.isGameActive}`);
+  }
+  return [pokemon2, 'attack'];
 };
 
-module.exports = botThinking;
+export default botThinking;

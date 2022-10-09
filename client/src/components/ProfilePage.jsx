@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'antd';
+
 import CardsCollection from './CardsCollection';
 import CardsDeck from './CardsDeck';
 
@@ -46,6 +48,7 @@ export default function ProfilePage() {
         <CardsDeck
           mockDeck={mockDeck}
         />
+        <Button>Edit deck</Button>
       </div>
       <div className='cardsCollection'>
         <h2>My collection</h2>

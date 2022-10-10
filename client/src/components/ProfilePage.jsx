@@ -10,6 +10,7 @@ import mockPokemons from '../mock/mock.pokemons';
 import mockDeck from '../mock/mock.deck';
 
 export default function ProfilePage() {
+  const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
   const navigate = useNavigate();
   const auth = useSelector((store) => store.auth);
   const { user } = auth;
@@ -19,6 +20,10 @@ export default function ProfilePage() {
       navigate('/login');
     }
   }, [auth, navigate]);
+
+  const handleDeckEditing = () => {
+    setIsDeckBeingEdited(true);
+  }
 
   return (
     <div
@@ -48,7 +53,7 @@ export default function ProfilePage() {
         <CardsDeck
           mockDeck={mockDeck}
         />
-        <Button>Edit deck</Button>
+        <Button onClick={handleDeckEditing}>Edit deck</Button>
       </div>
       <div className='cardsCollection'>
         <h2>My collection</h2>

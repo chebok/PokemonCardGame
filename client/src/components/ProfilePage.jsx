@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'antd';
+import styled from 'styled-components';
 
 import CardsCollection from './CardsCollection';
 import CardsDeck from './CardsDeck';
@@ -15,26 +16,32 @@ export default function ProfilePage() {
   const auth = useSelector((store) => store.auth);
   const { user } = auth;
 
+  let currentDeck = mockDeck;
+  let currentColletion = mockPokemons;
+
   useEffect(() => {
     if (!auth.isLoggedIn) {
       navigate('/login');
     }
   }, [auth, navigate]);
 
+  const removeFromDeck = (item) => {
+    currentDeck = currentDeck.filter((pokemon) => {
+      if (pokemon === item) {
+        console.log(currentDeck);
+        return false;
+      }
+      console.log(currentDeck);
+      return true;
+    })
+  }
+
   const handleDeckEditing = () => {
     setIsDeckBeingEdited(true);
   }
 
   return (
-    <div
-      className='profileContainer'
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        padding: '10px 20px',
-      }}
-    >
+    <ProfileContainer>
       <header className='profileHeader'>
         <h3>
           <strong>Welcome, {user?.username}!</strong>
@@ -61,6 +68,13 @@ export default function ProfilePage() {
           mockPokemons={mockPokemons}
         />
       </div>
-    </div>
+    </ProfileContainer>
   )
 };
+
+const ProfileContainer = styled.div`
+  display: flex,
+  flexDirection: column,
+  alignItems: flex-start,
+  padding: 10px 20px,
+`;

@@ -1,17 +1,27 @@
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PlayerCard from './PlayerCard';
-import mockDeck from '../mock/mock.deck';
 import styled from 'styled-components';
+import { getDeck } from '../redux/actions/deck';
 
 export default function PlayerCardsBlock() {
+  const auth = useSelector((store) => store.auth);
+  const deck = useSelector((store) => store.deck);
+  const { user } = auth;
+  const { userDeck } = deck;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDeck(user.id));
+  }, []);
+
   return (
     <Container>
-      {mockDeck.map((card) =>
+      {userDeck && userDeck.map((pokemon) =>
         <PlayerCard
-        spriteBack={card.spriteBack}
-        name={card.name}
-        health={card.health}
-        speed={card.speed}
-        damage={card.damage}
+          pokemon={pokemon}
+          key={pokemon.id}
         />
       )}
     </Container>

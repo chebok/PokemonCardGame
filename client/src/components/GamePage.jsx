@@ -9,7 +9,7 @@ export default function GamePage() {
       <h1>Fight!</h1>
       <PlayerCardsBlock />
     </Container>
-  )
+  );
 };
 
 const Container = styled.div`

@@ -3,7 +3,8 @@ import { Card, Tooltip, Modal } from 'antd';
 // import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 // const { Meta } = Card;
 
-const PokeCard = ({ image, name, legend, isDeck }) => {
+const PokeCard = ({ pokemon = {} }) => {
+  const { image, name, legend, isDeck } = pokemon;
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState('Content of the modal');
@@ -82,14 +83,14 @@ const PokeCard = ({ image, name, legend, isDeck }) => {
               style={{ width: "150px" }}
             />
             <p>{legend}</p>
-            <br/>
-            <p 
-            style={{
-              textAlign: 'right',
-            }}
+            <br />
+            <p
+              style={{
+                textAlign: 'right',
+              }}
             >
               {isDeck ? 'Remove this Pokemon from your deck?' : 'Add this Pokemon to your deck?'}
-              </p>
+            </p>
           </div>
         }
       </Modal>

@@ -16,30 +16,34 @@ export default function ProfilePage() {
   const auth = useSelector((store) => store.auth);
   const collection = useSelector((store) => store.collection);
   const deck = useSelector((store) => store.deck);
+  const { user } = auth;
+  const { userDeck } = deck;
 
   const [unknownPokemons, setUnknownPokemons] = useState(150);
   const [currentCollection, setCurrentCollection] = useState(collection);
-  const [currentDeck, setCurrentDeck] = useState(deck);
+  const [currentDeck, setCurrentDeck] = useState(userDeck);
   const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
   // const parentRef = useRef();
   const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = auth;
-
-  useEffect(() => {
-    dispatch(getCollection(user.id));
-    dispatch(getDeck(user.id));
-  }, []);
 
   useEffect(() => {
     if (!auth.isLoggedIn) {
       navigate('/login');
     }
+  }, [auth, navigate]);
+
+  useEffect(() => {
+    dispatch(getCollection(user.id));
+    dispatch(getDeck(user.id));
+  }, [user, dispatch]);
+
+  useEffect(() => {
     setCurrentCollection(collection);
-    setCurrentDeck(deck.userDeck);
+    setCurrentDeck(userDeck);
     setUnknownPokemons(150 - collection.length);
-  }, [auth, deck, collection, dispatch, navigate]);
+  }, [userDeck, collection, dispatch, navigate]);
 
   // useEffect(() => {
   //   if (parentRef.current) {

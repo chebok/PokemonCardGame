@@ -37,7 +37,7 @@ export default function ProfilePage() {
       navigate('/login');
     }
     setCurrentCollection(collection);
-    setCurrentDeck(deck);
+    setCurrentDeck(deck.userDeck);
     setUnknownPokemons(150 - collection.length);
   }, [auth, deck, collection, dispatch, navigate]);
 

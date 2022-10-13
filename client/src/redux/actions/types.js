@@ -8,6 +8,7 @@ export const SET_MESSAGE = 'SET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 
 export const GET_DECK = 'GET_DECK';
+export const GET_RANDOM_DECK = 'GET_RANDOM_DECK';
 export const UPDATE_DECK = 'UPDATE_DECK';
 
 export const GET_COLLECTION = 'GET_COLLECTION';

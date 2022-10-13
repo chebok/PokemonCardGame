@@ -1,16 +1,25 @@
-import { useSelector } from 'react-redux';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import RivalCard from './RivalCard';
 import styled from 'styled-components';
+import { getRandomDeck } from '../redux/actions/deck';
 
 export default function RivalCardsBlock() {
   const deck = useSelector((store) => store.deck);
+  const { randomDeck } = deck;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRandomDeck());
+  }, []);
 
   return (
     <Container>
-      {deck.map((pokemon) =>
+      {randomDeck && randomDeck.map((pokemon) =>
         <RivalCard
-        pokemon={pokemon}
-        key={pokemon.id}
+          pokemon={pokemon}
+          key={pokemon.id}
         />
       )}
     </Container>

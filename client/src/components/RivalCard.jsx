@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function RivalCard({ sprite, name, health, speed, damage }) {
+export default function RivalCard({ pokemon }) {
+  const { sprite, name, health, speed, damage } = pokemon;
   const [percent, setPercent] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);
@@ -28,31 +29,31 @@ export default function RivalCard({ sprite, name, health, speed, damage }) {
     <Container>
       {isReady && (
         <RivalCardContainer>
-        <RivalCardPokemonContainer isActive>
-          <RivalCardPokemonImgContainer>
-            <img src={sprite} alt='pokemon' />
-          </RivalCardPokemonImgContainer>
-          <p>name: {name}</p>
-          <p>health: {currentHealth}</p>
-          <p>speed: {speed}</p>
-          <p>damage: {damage}</p>
-        </RivalCardPokemonContainer>
-        <Progress percent={percent} />
-      </RivalCardContainer>
+          <RivalCardPokemonContainer isActive>
+            <RivalCardPokemonImgContainer>
+              <img src={sprite} alt='rivalPokemonIsReady' />
+            </RivalCardPokemonImgContainer>
+            <p>name: {name}</p>
+            <p>health: {currentHealth}</p>
+            <p>speed: {speed}</p>
+            <p>damage: {damage}</p>
+          </RivalCardPokemonContainer>
+          <Progress percent={percent} />
+        </RivalCardContainer>
       )}
       {!isReady && (
         <RivalCardContainer>
-        <RivalCardPokemonContainer>
-          <RivalCardPokemonImgContainer>
-            <img src={sprite} alt='pokemon' />
-          </RivalCardPokemonImgContainer>
-          <p>name: {name}</p>
-          <p>health: {currentHealth}</p>
-          <p>speed: {speed}</p>
-          <p>damage: {damage}</p>
-        </RivalCardPokemonContainer>
-        <Progress percent={percent} />
-      </RivalCardContainer>
+          <RivalCardPokemonContainer>
+            <RivalCardPokemonImgContainer>
+              <img src={sprite} alt='rivalPokemonIsNotReady' />
+            </RivalCardPokemonImgContainer>
+            <p>name: {name}</p>
+            <p>health: {currentHealth}</p>
+            <p>speed: {speed}</p>
+            <p>damage: {damage}</p>
+          </RivalCardPokemonContainer>
+          <Progress percent={percent} />
+        </RivalCardContainer>
       )}
     </Container>
   )
@@ -80,6 +81,8 @@ display: flex;
 flex-direction: column;
 border: 2px solid #1a2dc4;
 background-color: #def0fd;
+min-height: 228px;
+justify-content: flex-end;
 
   ${props => props.isActive && css`
   border: 2px solid #52c41a;

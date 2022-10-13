@@ -8,6 +8,7 @@ export default function PlayerCardsBlock() {
   const auth = useSelector((store) => store.auth);
   const deck = useSelector((store) => store.deck);
   const { user } = auth;
+  const { userDeck } = deck;
 
   const dispatch = useDispatch();
 
@@ -17,10 +18,10 @@ export default function PlayerCardsBlock() {
 
   return (
     <Container>
-      {deck.map((pokemon) =>
+      {userDeck && userDeck.map((pokemon) =>
         <PlayerCard
-        pokemon={pokemon}
-        key={pokemon.id}
+          pokemon={pokemon}
+          key={pokemon.id}
         />
       )}
     </Container>

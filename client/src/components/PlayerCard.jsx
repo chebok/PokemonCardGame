@@ -82,6 +82,8 @@ display: flex;
 flex-direction: column;
 border: 2px solid #ccc;
 background-color: #e6e6e6;
+min-height: 228px;
+justify-content: flex-end;
 
   ${props => props.isActive && css`
   background: #e8fdde;

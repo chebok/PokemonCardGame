@@ -1,5 +1,5 @@
 import { Card, Tooltip } from 'antd';
-import questionMark from '../mock/images/questionMark.jpeg';
+import questionMark from '../static/questionMark.jpeg';
 
 const PokeCardUnknown = () => {
   return (

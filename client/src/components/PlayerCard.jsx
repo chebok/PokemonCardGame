@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function PlayerCard({ spriteBack, name, health, speed, damage }) {
+export default function PlayerCard({ pokemon }) {
+  const { spriteBack, name, health, speed, damage } = pokemon;
   const [percent, setPercent] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);

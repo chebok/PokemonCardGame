@@ -1,17 +1,16 @@
+import { useSelector } from 'react-redux';
 import RivalCard from './RivalCard';
-import mockDeck from '../mock/mock.deck';
 import styled from 'styled-components';
 
 export default function RivalCardsBlock() {
+  const deck = useSelector((store) => store.deck);
+
   return (
     <Container>
-      {mockDeck.map((card) =>
+      {deck.map((pokemon) =>
         <RivalCard
-        sprite={card.sprite}
-        name={card.name}
-        health={card.health}
-        speed={card.speed}
-        damage={card.damage}
+        pokemon={pokemon}
+        key={pokemon.id}
         />
       )}
     </Container>

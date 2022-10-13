@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/collection';
+const API_URL = 'http://localhost:5000/deck';
 
-class CollectionService {
-  async getCollection(userId) {
+class DeckService {
+  async getDeck(userId) {
     const response = await axios.get(`${API_URL}/${userId}`);
     if (response.data) {
       JSON.stringify(response.data);
@@ -23,4 +23,4 @@ class CollectionService {
   // }
 }
 
-export default new CollectionService();
+export default new DeckService();

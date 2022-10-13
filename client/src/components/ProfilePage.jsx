@@ -2,23 +2,24 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Space } from 'antd';
-import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import styled from 'styled-components';
 
-import CardsCollection from './CardsCollection';
-import CardsDeck from './CardsDeck';
-import PokeCard from './PokeCard';
-
-import mockPokemons from '../mock/mock.pokemons';
-import mockDeck from '../mock/mock.deck';
 import { getCollection } from '../redux/actions/collection';
+import { getDeck } from '../redux/actions/deck';
+
+import PokeCard from './PokeCard';
+import PokeCardUnknown from './PokeCardUnknown';
+
 
 export default function ProfilePage() {
   const auth = useSelector((store) => store.auth);
   const collection = useSelector((store) => store.collection);
-  
-  const [currentDeck, setCurrentDeck] = useState({});
+  const deck = useSelector((store) => store.deck);
+
+  const [unknownPokemons, setUnknownPokemons] = useState(150);
   const [currentCollection, setCurrentCollection] = useState(collection);
+  const [currentDeck, setCurrentDeck] = useState(deck);
   const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
   // const parentRef = useRef();
   const [parent] = useAutoAnimate();
@@ -26,28 +27,19 @@ export default function ProfilePage() {
   const dispatch = useDispatch();
   const { user } = auth;
 
-  // let currentDeck = mockDeck;
-  // let currentCollection = mockPokemons;
-
   useEffect(() => {
-    dispatch(getCollection(user.id))
-    setCurrentCollection(collection);
+    dispatch(getCollection(user.id));
+    dispatch(getDeck(user.id));
   }, []);
 
   useEffect(() => {
     if (!auth.isLoggedIn) {
       navigate('/login');
     }
-    dispatch(getCollection(user.id));
     setCurrentCollection(collection);
-  }, [auth, user, collection, navigate, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getCollection(user.id));
-  //   // console.log(collection);
-  //   // setCurrentCollection(collection);
-  //   // setCurrentDeck(collection);
-  // }, [user, dispatch]);
+    setCurrentDeck(deck);
+    setUnknownPokemons(150 - collection.length);
+  }, [auth, deck, collection, dispatch, navigate]);
 
   // useEffect(() => {
   //   if (parentRef.current) {
@@ -77,52 +69,66 @@ export default function ProfilePage() {
           <strong>Welcome, {user?.username}!</strong>
         </h3>
       </header>
-      <СardsDeckContainer>
+      <DeckContainer>
         <h2>My deck</h2>
-        <CardsDeckWrapper>
+        <DeckWrapper>
           <Space size={[8, 16]} wrap ref={parent}>
-            {currentCollection.map((pokemon) => (
+            {currentDeck && currentDeck.map((pokemon) => (
               <PokeCard pokemon={pokemon} key={pokemon.id} onClick={removeFromDeck} />
-            )
-            )}
+            ))}
           </Space>
-        </CardsDeckWrapper>
-        {/* <CardsDeck ref={parent}
-          mockDeck={currentDeck}
-        /> */}
+        </DeckWrapper>
         <Button onClick={handleDeckEditing}>Edit deck</Button>
-      </СardsDeckContainer>
-      <div className='cardsCollection'>
+      </DeckContainer>
+      <CollectionContainer>
         <h2>My collection</h2>
-        <Space size={[8, 16]} wrap>
-          {currentCollection.map(pokemon =>
+        <CollectionWrapper>
+        <Space
+        size={[8, 16]}
+        wrap
+        style={{
+          justifyContent: 'center',
+        }}>
+          {currentCollection && currentCollection.map((pokemon) => (
             <PokeCard pokemon={pokemon} key={pokemon.id} />
-          )}
+          ))}
+          {Array(unknownPokemons).fill().map(() => (
+            <PokeCardUnknown />
+          ))}
         </Space>
-        {/* <CardsCollection
-          mockPokemons={currentCollection}
-        /> */}
-      </div>
+        </CollectionWrapper>
+      </CollectionContainer>
     </ProfilePageContainer>
   )
 };
 
 const ProfilePageContainer = styled.div`
-  display: flex,
-  flexDirection: column,
-  alignItems: flex-start,
-  padding: 10px 20px,
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 20px;
 `;
 
-const СardsDeckContainer = styled.div`
-  display: flex,
-  flexDirection: column,
-  alignItems: center,
-  padding: 10px 20px,
-  align-self: center,
+const DeckContainer = styled.div`
+  padding: 10px 20px;
+  align-self: center;
 `;
 
-const CardsDeckWrapper = styled.div`
+const DeckWrapper = styled.div`
+  padding: 15px 30px;
+  background-color: #ECECEC;
+  margin-bottom: 20px;
+`;
+
+const CollectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  align-self: center;
+`;
+
+const CollectionWrapper = styled.div`
   padding: 15px 30px;
   background-color: #ECECEC;
 `;

@@ -1,8 +1,6 @@
 import { GET_COLLECTION, UPDATE_COLLECTION } from '../actions/types';
 
-const initialState = {};
-
-export default function collection(state = initialState, action) {
+export default function collection(state = [], action) {
   const { type, payload } = action;
 
   switch (type) {

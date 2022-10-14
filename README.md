@@ -6,7 +6,7 @@ A real-time battle card game with asyncronous logic using promises and timers.
   - NodeJs
   - Express
   - MongoDB
-  - Web-sockets
+  - Web-sockets (planned)
 
 ### Front-end
   - React
@@ -14,7 +14,7 @@ A real-time battle card game with asyncronous logic using promises and timers.
   - Redux, Redux-thunk
   - Ant Design
   - Styled Components
-  - Socket.io
+  - Socket.io (planned)
   
 ## Team
   - Ekaterina Gnedenko - team lead, front-end

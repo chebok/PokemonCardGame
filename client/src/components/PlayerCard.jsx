@@ -33,14 +33,6 @@ export default function PlayerCard(props) {
     increase();
   }, [percent]);
 
-  // const handleClickToChooseCard = (id) => {
-  //   // if (setIsChosenCard) {
-  //   //   setIsChosenCard(false);
-  //   // }
-  //   //     setIsChosenCard(true);
-  //       // console.log('chosenUserCardId: ', chosenUserCardId);
-  // };
-
   return (
     <Container>
       <PlayerCardContainer>
@@ -51,7 +43,7 @@ export default function PlayerCard(props) {
           onClick={onClick}
         >
           <PlayerCardPokemonImgContainer>
-            <img src={spriteBack} alt='pokemonSprite' />
+            <img src={spriteBack} alt='pokemonSpriteBack' />
           </PlayerCardPokemonImgContainer>
           <PlayerCardPokemonStatsContainer>
             <p>name: {name}</p>

@@ -11,7 +11,7 @@ import { getRandomDeck } from '../redux/actions/deck';
 
 
 export default function GamePage() {
-  const [chosenUserCardId, setChosenUserCardId] = useState(0);
+  const [chosenPlayerCardId, setChosenPlayerCardId] = useState(0);
   const [chosenRivalCardId, setChosenRivalCardId] = useState(0);
   const [canPlayerMove, setCanPlayerMove] = useState(false);
 
@@ -38,7 +38,7 @@ export default function GamePage() {
 
       userDeck.filter((pokemon) => {
         if (pokemon.id === cardId) {
-          setChosenUserCardId(cardId);
+          setChosenPlayerCardId(cardId);
           setCanPlayerMove(true);
 
           return true;
@@ -50,7 +50,7 @@ export default function GamePage() {
   };
 
   const isChosenPlayerCard = (cardId) => {
-    return cardId === chosenUserCardId ? true : false;
+    return cardId === chosenPlayerCardId ? true : false;
   };
 
   const handleRivalCardClick = (rivalCardId, e) => {

@@ -2,17 +2,17 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RivalCard from './RivalCard';
 import styled from 'styled-components';
-import { getRandomDeck } from '../redux/actions/deck';
+// import { getRandomDeck } from '../redux/actions/deck';
 
-export default function RivalCardsBlock() {
-  const deck = useSelector((store) => store.deck);
-  const { randomDeck } = deck;
+export default function RivalCardsBlock({ randomDeck }) {
+  // const deck = useSelector((store) => store.deck);
+  // const { randomDeck } = deck;
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getRandomDeck());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getRandomDeck());
+  // }, []);
 
   return (
     <Container>

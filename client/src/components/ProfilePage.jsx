@@ -24,7 +24,7 @@ export default function ProfilePage() {
   const [currentDeck, setCurrentDeck] = useState(userDeck);
   const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
   // const parentRef = useRef();
-  const [parent] = useAutoAnimate();
+  // const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -81,7 +81,11 @@ export default function ProfilePage() {
       <DeckContainer>
         <h2>My deck</h2>
         <DeckWrapper>
-          <Space size={[8, 16]} wrap ref={parent}>
+          <Space
+          size={[8, 16]}
+          wrap
+          // ref={parent}
+          >
             {currentDeck && currentDeck.map((pokemon) => (
               <PokeCard pokemon={pokemon} key={pokemon.id} onClick={removeFromDeck} />
             ))}

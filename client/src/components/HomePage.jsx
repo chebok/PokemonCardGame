@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import styled from 'styled-components';
 
-import UserService from "../services/user.service";
+import UserService from '../services/user.service';
 
 export default function HomePage() {
   const [content, setContent] = useState('');

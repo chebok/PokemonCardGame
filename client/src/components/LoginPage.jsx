@@ -41,7 +41,7 @@ export default function LoginPage() {
     } else {
       setIsLoading(false);
     }
-    console.log('Success:', values);
+    // console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo) => {

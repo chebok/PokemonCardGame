@@ -15,9 +15,6 @@ export default function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log('auth in Reg', auth);
-  console.log('authisLoggedIn in Reg', auth.isLoggedIn);
-
   useEffect(() => {
     if (auth.isLoggedIn) {
       navigate('/profile');
@@ -32,7 +29,6 @@ export default function RegisterPage() {
     const { username, password } = values;
 
     setIsLoading(true);
-    console.log('isError', isError);
     if (!isError) {
       dispatch(register(username, password))
         .then(() => {
@@ -46,7 +42,7 @@ export default function RegisterPage() {
       setIsLoading(false);
     }
 
-    console.log('Success:', values);
+    // console.log('Success:', values);
 
   };
 

@@ -11,6 +11,10 @@ import { getRandomDeck } from '../redux/actions/deck';
 
 
 export default function GamePage() {
+  const [chosenUserCardId, setChosenUserCardId] = useState(null);
+  const [isChosenCard, setIsChosenCard] = useState(false);
+  // const [currentRandomDeck, setCurrentRandomDeck] = useState([]);
+
   const user = useSelector((store) => store.auth.user);
   const { userDeck, randomDeck } = useSelector((store) => store.deck);
 
@@ -21,13 +25,31 @@ export default function GamePage() {
     dispatch(getRandomDeck());
   }, []);
 
-  useEffect(() => {
-    // const newGameInstance = new Game(userDeck, randomDeck);
-  }, [userDeck, randomDeck]);
+  // useEffect(() => {
+  // //   const newGameInstance = new Game(userDeck, randomDeck);
+  // console.log('randomDeck', randomDeck);
+
+  // }, [userDeck, randomDeck]);
+
+  const handlePlayerCardClick = (cardId, e) => {
+    e.preventDefault();
+    console.log('clicked on ', cardId);
+    // console.log('chosenUserCardId: ', chosenUserCardId);
+
+    userDeck.filter((pokemon) => {
+      if (pokemon.id === cardId) {
+        setChosenUserCardId(cardId);
+        console.log('chosenUserCardId: ', chosenUserCardId);
+
+        return true;
+      }
+
+      return false;
+    })
+  };
 
   return (
     <Container>
-      {/* <RivalCardsBlock randomDeck={randomDeck}/> */}
       <RivalCardsBlock>
         {randomDeck && randomDeck.map((pokemon) =>
           <RivalCard
@@ -42,6 +64,8 @@ export default function GamePage() {
           <PlayerCard
             pokemon={pokemon}
             key={pokemon.id}
+            onClick={(e) => handlePlayerCardClick(pokemon.id, e)}
+            isChosenCard={pokemon.id === chosenUserCardId ? true : false}
           />
         )}
       </PlayerCardsBlock>

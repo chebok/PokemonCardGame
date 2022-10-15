@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function PlayerCard({ pokemon, isChosenCard, onClick }) {
+export default function PlayerCard(props) {
+  const { pokemon, isChosenPlayerCard, onClick, activatePlayerMove } = props;
   const { spriteBack, name, health, speed, damage, id } = pokemon;
   const [percent, setPercent] = useState(0);
-  const [chosenUserCardId, setChosenUserCardId] = useState(null);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
-  // const [isChosenCard, setIsChosenCard] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);
+
+  useEffect(() => {
+    if (isReadyToMove) {
+      activatePlayerMove(true);
+    }
+  }, [isReadyToMove, activatePlayerMove]);
 
   useEffect(() => {
     const increase = () => {
@@ -38,12 +43,11 @@ export default function PlayerCard({ pokemon, isChosenCard, onClick }) {
 
   return (
     <Container>
-      <PlayerCardContainer
-        // onClick={handleClickToChooseCard(id)}
-      >
+      <PlayerCardContainer>
         <PlayerCardPokemonContainer
+          pokemonId={id}
           isReadyToMove={isReadyToMove}
-          isChosenCard={isChosenCard}
+          isChosenCard={isChosenPlayerCard}
           onClick={onClick}
         >
           <PlayerCardPokemonImgContainer>
@@ -91,7 +95,7 @@ display: flex;
 flex-direction: column;
 border: 2px solid #ccc;
 background-color: #e6e6e6;
-min-height: 228px;
+min-height: 230px;
 justify-content: flex-end;
 
   ${props => props.isReadyToMove && css`

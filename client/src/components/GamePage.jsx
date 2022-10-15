@@ -11,9 +11,9 @@ import { getRandomDeck } from '../redux/actions/deck';
 
 
 export default function GamePage() {
-  const [chosenUserCardId, setChosenUserCardId] = useState(null);
-  const [isChosenCard, setIsChosenCard] = useState(false);
-  // const [currentRandomDeck, setCurrentRandomDeck] = useState([]);
+  const [chosenUserCardId, setChosenUserCardId] = useState(0);
+  const [chosenRivalCardId, setChosenRivalCardId] = useState(0);
+  const [canPlayerMove, setCanPlayerMove] = useState(false);
 
   const user = useSelector((store) => store.auth.user);
   const { userDeck, randomDeck } = useSelector((store) => store.deck);
@@ -25,47 +25,82 @@ export default function GamePage() {
     dispatch(getRandomDeck());
   }, []);
 
-  // useEffect(() => {
-  // //   const newGameInstance = new Game(userDeck, randomDeck);
-  // console.log('randomDeck', randomDeck);
+  useEffect(() => {
+    // const newGameInstance = new Game(userDeck, randomDeck);
+    // console.log('randomDeck, ', randomDeck);
 
-  // }, [userDeck, randomDeck]);
+  }, [userDeck, randomDeck]);
 
   const handlePlayerCardClick = (cardId, e) => {
-    e.preventDefault();
-    console.log('clicked on ', cardId);
-    // console.log('chosenUserCardId: ', chosenUserCardId);
+    if (canPlayerMove) {
+      e.preventDefault();
+      console.log('clicked on ', cardId);
 
-    userDeck.filter((pokemon) => {
-      if (pokemon.id === cardId) {
-        setChosenUserCardId(cardId);
-        console.log('chosenUserCardId: ', chosenUserCardId);
+      userDeck.filter((pokemon) => {
+        if (pokemon.id === cardId) {
+          setChosenUserCardId(cardId);
+          setCanPlayerMove(true);
 
-        return true;
-      }
+          return true;
+        }
 
-      return false;
-    })
+        return false;
+      })
+    }
+  };
+
+  const isChosenPlayerCard = (cardId) => {
+    return cardId === chosenUserCardId ? true : false;
+  };
+
+  const handleRivalCardClick = (rivalCardId, e) => {
+    if (canPlayerMove) {
+      e.preventDefault();
+      console.log('clicked on ', rivalCardId);
+
+      randomDeck.filter((pokemon) => {
+        if (pokemon.id === rivalCardId) {
+          setChosenRivalCardId(rivalCardId);
+
+          return true;
+        }
+
+        return false;
+      })
+    }
+  };
+
+  const isChosenRivalCard = (rivalCardId) => {
+    return rivalCardId === chosenRivalCardId ? true : false;
+  };
+
+  const activatePlayerMove = (canMove) => {
+    if (canMove) {
+      setCanPlayerMove(true);
+    }
   };
 
   return (
     <Container>
       <RivalCardsBlock>
-        {randomDeck && randomDeck.map((pokemon) =>
+        {randomDeck && randomDeck.map((rivalPokemon) =>
           <RivalCard
-            pokemon={pokemon}
-            key={pokemon.id}
+            pokemon={rivalPokemon}
+            key={rivalPokemon.id}
+            onClick={(e) => handleRivalCardClick(rivalPokemon.id, e)}
+            isChosenRivalCard={isChosenRivalCard(rivalPokemon.id)}
           />
         )}
       </RivalCardsBlock>
       <h1>Fight!</h1>
       <PlayerCardsBlock>
-        {userDeck && userDeck.map((pokemon) =>
+        {userDeck && userDeck.map((playerPokemon) =>
           <PlayerCard
-            pokemon={pokemon}
-            key={pokemon.id}
-            onClick={(e) => handlePlayerCardClick(pokemon.id, e)}
-            isChosenCard={pokemon.id === chosenUserCardId ? true : false}
+            pokemon={playerPokemon}
+            key={playerPokemon.id}
+            onClick={(e) => handlePlayerCardClick(playerPokemon.id, e)}
+            isChosenPlayerCard={isChosenPlayerCard(playerPokemon.id)}
+            activatePlayerMove={activatePlayerMove}
           />
         )}
       </PlayerCardsBlock>
@@ -74,23 +109,23 @@ export default function GamePage() {
 };
 
 const Container = styled.div`
-  height: 100vh;
-  padding: 30px;
+height: 100vh;
+padding: 30px;
 `;
 
 const RivalCardsBlock = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 300px;
-  border-color: blue;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+height: 300px;
+border-color: blue;
 `;
 
 const PlayerCardsBlock = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 300px;
-  border-color: blue;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+height: 300px;
+border-color: blue;
 `;
 

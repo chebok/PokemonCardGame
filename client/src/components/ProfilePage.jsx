@@ -9,8 +9,7 @@ import { getCollection } from '../redux/actions/collection';
 import { getDeck } from '../redux/actions/deck';
 
 import PokeCard from './PokeCard';
-import PokeCardUnknown from './PokeCardUnknown';
-
+import CardsCollection from './CardsCollection';
 
 export default function ProfilePage() {
   const auth = useSelector((store) => store.auth);
@@ -19,7 +18,6 @@ export default function ProfilePage() {
   const { user } = auth;
   const { userDeck } = deck;
 
-  const [unknownPokemons, setUnknownPokemons] = useState(150);
   const [currentCollection, setCurrentCollection] = useState(collection);
   const [currentDeck, setCurrentDeck] = useState(userDeck);
   const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
@@ -42,7 +40,6 @@ export default function ProfilePage() {
   useEffect(() => {
     setCurrentCollection(collection);
     setCurrentDeck(userDeck);
-    setUnknownPokemons(150 - collection.length);
   }, [userDeck, collection, dispatch, navigate]);
 
   // useEffect(() => {
@@ -82,8 +79,8 @@ export default function ProfilePage() {
         <h2>My deck</h2>
         <DeckWrapper>
           <Space
-          size={[8, 16]}
-          wrap
+            size={[8, 16]}
+            wrap
           // ref={parent}
           >
             {currentDeck && currentDeck.map((pokemon) => (
@@ -93,24 +90,9 @@ export default function ProfilePage() {
         </DeckWrapper>
         <Button onClick={handleDeckEditing}>Edit deck</Button>
       </DeckContainer>
-      <CollectionContainer>
-        <h2>My collection</h2>
-        <CollectionWrapper>
-        <Space
-        size={[8, 16]}
-        wrap
-        style={{
-          justifyContent: 'center',
-        }}>
-          {currentCollection && currentCollection.map((pokemon) => (
-            <PokeCard pokemon={pokemon} key={pokemon.id} />
-          ))}
-          {Array(unknownPokemons).fill().map(() => (
-            <PokeCardUnknown />
-          ))}
-        </Space>
-        </CollectionWrapper>
-      </CollectionContainer>
+      <CardsCollection
+        currentCollection={currentCollection}
+      />
     </ProfilePageContainer>
   )
 };
@@ -131,17 +113,4 @@ const DeckWrapper = styled.div`
   padding: 15px 30px;
   background-color: #ECECEC;
   margin-bottom: 20px;
-`;
-
-const CollectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 20px;
-  align-self: center;
-`;
-
-const CollectionWrapper = styled.div`
-  padding: 15px 30px;
-  background-color: #ECECEC;
 `;

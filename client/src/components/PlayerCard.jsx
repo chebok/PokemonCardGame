@@ -118,6 +118,7 @@ const PlayerCardPokemonContainer = styled.div`
 display: flex;
 flex-direction: column;
 border: 2px solid #ccc;
+border-radius: 12px;
 background-color: #e6e6e6;
 min-height: 230px;
 justify-content: flex-end;

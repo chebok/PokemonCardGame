@@ -97,6 +97,7 @@ padding: 0 10px;
 const RivalCardPokemonContainer = styled.div`
 display: flex;
 flex-direction: column;
+border-radius: 12px;
 border: 2px solid #ccc;
 background-color: #e6e6e6;
 min-height: 230px;

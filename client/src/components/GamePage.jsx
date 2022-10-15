@@ -19,6 +19,7 @@ export default function GamePage() {
   const [isTargetRivalCardAlive, setIsTargetRivalCardAlive] = useState(true);
   const [hasAttackStarted, setHasAttackStarted] = useState(false);
   const [hasAttackFinished, setHasAttackFinished] = useState(true);
+  const [battleMessage, setBattleMessage] = useState('Wait untill your pokemons are ready to move');
 
   const user = useSelector((store) => store.auth.user);
   const { userDeck, randomDeck } = useSelector((store) => store.deck);
@@ -29,6 +30,10 @@ export default function GamePage() {
     dispatch(getDeck(user.id));
     dispatch(getRandomDeck());
   }, []);
+
+  // useEffect(() => {
+  //   console.log('battleMessage', battleMessage);
+  // }, [battleMessage])
 
   useEffect(() => {
     if (hasAttackFinished) {
@@ -48,12 +53,15 @@ export default function GamePage() {
   };
 
   const handlePlayerCardClick = (cardId, e) => {
+    e.preventDefault();
     if (canPlayerCardMove && hasAttackFinished) {
-      // e.preventDefault();
+      console.log('HEREEEEEeeeeeeeeeeeeeeeeeee in Game in handlePlayerCardClick');
+
+      setBattleMessage('Choose one of rival pokemons to attack');
 
       const foundPlayerCard = findCardById(userDeck, cardId);
-      setChosenPlayerCard(foundPlayerCard);
       setHasPlayerChosenCard(true);
+      setChosenPlayerCard(foundPlayerCard);
       setHasAttackStarted(true);
       // setHasAttackFinished(false);
       // setChosenPlayerCardId(foundPlayerCard.id);
@@ -118,6 +126,7 @@ export default function GamePage() {
   const isCardReadyToMove = (isReadyToMove) => {
     if (isReadyToMove) {
       setCanPlayerCardMove(true);
+      setBattleMessage('Choose one of your pokemons to move');
       console.log('canPlayerCardMove in GAME isCardReadyToMove', canPlayerCardMove);
     }
   };
@@ -174,7 +183,7 @@ export default function GamePage() {
           />
         )}
       </RivalCardsBlock>
-      <h1>Fight!</h1>
+      <h1>{battleMessage}</h1>
       <PlayerCardsBlock>
         {userDeck && userDeck.map((playerPokemon) =>
           <PlayerCard

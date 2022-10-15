@@ -3,17 +3,49 @@ import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
 export default function PlayerCard(props) {
-  const { pokemon, isChosenPlayerCard, onClick, activatePlayerMove } = props;
+  const { pokemon, isChosenPlayerCard, onClick, isCardReadyToMove, hasCurrentAttackFinished, hasAttackFinished } = props;
   const { spriteBack, name, health, speed, damage, id } = pokemon;
   const [percent, setPercent] = useState(0);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
+  // const [isCurrentlyChosenCard, setIsCurrentlyChosenCard] = useState(isChosenPlayerCard);
   const [currentHealth, setCurrentHealth] = useState(health);
+  const [isAlive, setIsAlive] = useState(true);
 
   useEffect(() => {
     if (isReadyToMove) {
-      activatePlayerMove(true);
+      isCardReadyToMove(true);
     }
-  }, [isReadyToMove, activatePlayerMove]);
+    else {
+      isCardReadyToMove(false);
+    }
+  }, [isReadyToMove, isCardReadyToMove]);
+
+  // useEffect(() => {
+  //   if (!isReadyToMove) {
+  //     hasCurrentAttackFinished(true);
+  //     setPercent(0);
+  //   }
+  // }, [isReadyToMove, hasCurrentAttackFinished]);
+
+  useEffect(() => {
+    console.log('hasAttackFinished in PlayerCard', hasAttackFinished);
+    if (hasAttackFinished) {
+      console.log('percent', percent);
+      setPercent(0);
+      setIsReadyToMove(false);
+    }
+  }, [hasAttackFinished])
+
+  // useEffect(() => {
+  //   if (!isReadyToMove) {
+  //     hasCurrentAttackFinished(true);
+  //     setPercent(0);
+  //     console.log('percent in PlayerCard', percent);
+  //   }
+  //   // else {
+  //   //   hasCurrentAttackFinished(false);
+  //   // }
+  // }, [isReadyToMove, hasCurrentAttackFinished]);
 
   useEffect(() => {
     const increase = () => {
@@ -95,6 +127,7 @@ justify-content: flex-end;
   border: 2px solid #52c41a;
   cursor: pointer;
   `}
+
   ${props => props.isChosenCard && css`
   background: #f0e4f9;
   border: 2px solid #9a14f3;

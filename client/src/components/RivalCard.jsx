@@ -2,11 +2,30 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function RivalCard({ pokemon, isChosenRivalCard, onClick }) {
+export default function RivalCard(props) {
+  const { pokemon, isTargetRivalCard, onClick, currentDamage, isCardAlive } = props;
   const { sprite, name, health, speed, damage, id } = pokemon;
   const [percent, setPercent] = useState(0);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);
+  const [isAlive, setIsAlive] = useState(true);
+
+  useEffect(() => {
+    setCurrentHealth(currentHealth - currentDamage);
+    // console.log('currentDamage in Rival', currentDamage);
+    // console.log('currentHealth in Rival', currentHealth);
+  }, [currentDamage]);
+
+  useEffect(() => {
+    if (currentHealth <= 0) {
+      setCurrentHealth(0);
+      isCardAlive(false);
+      setIsAlive(false);
+    }
+    // console.log(`${name} isAlive in Rival`, isAlive);
+    // console.log(`${name} currentHealth in Rival`, currentHealth);
+    // console.log('isCardAlive in Rival', isCardAlive(false));
+  }, [currentHealth, isCardAlive]);
 
   useEffect(() => {
     const increase = () => {
@@ -31,8 +50,9 @@ export default function RivalCard({ pokemon, isChosenRivalCard, onClick }) {
         <RivalCardPokemonContainer
           pokemonId={id}
           isReadyToMove={isReadyToMove}
-          isChosenCard={isChosenRivalCard}
+          isChosenCard={isTargetRivalCard}
           onClick={onClick}
+          isDead={!isAlive}
         >
           <RivalCardPokemonImgContainer>
             <img src={sprite} alt='rivalPokemonSprite' />
@@ -81,13 +101,22 @@ border: 2px solid #ccc;
 background-color: #e6e6e6;
 min-height: 230px;
 justify-content: flex-end;
+cursor: pointer;
 
   ${props => props.isReadyToMove && css`
   border: 2px solid #1a2dc4;
   background-color: #def0fd;
   `}
+
   ${props => props.isChosenCard && css`
   border: 2px solid red;
   background-color: #ffd6d6;
+  cursor: default;
+  `}
+
+  ${props => props.isDead && css`
+  border: 2px solid black;
+  background-color: red;
+  cursor: default;
   `}
 `;

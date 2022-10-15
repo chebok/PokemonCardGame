@@ -64,7 +64,11 @@ export default function ProfilePage() {
 
   const handleDeckEditing = () => {
     setIsDeckBeingEdited(true);
-  }
+  };
+
+  const handleNewGameClick = () => {
+    navigate('/game');
+  };
 
   return (
     <ProfilePageContainer>
@@ -73,6 +77,7 @@ export default function ProfilePage() {
           <strong>Welcome, {user?.username}!</strong>
         </h3>
       </header>
+      <Button type="primary" onClick={handleNewGameClick}>New game</Button>
       <DeckContainer>
         <h2>My deck</h2>
         <DeckWrapper>
@@ -109,7 +114,7 @@ export default function ProfilePage() {
 const ProfilePageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 10px 20px;
 `;
 

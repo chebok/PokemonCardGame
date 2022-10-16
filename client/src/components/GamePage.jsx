@@ -179,7 +179,7 @@ export default function GamePage() {
             isTargetRivalCard={isTargetRivalCard(rivalPokemon.id) ? isTargetRivalCard(rivalPokemon.id) : false}
             currentDamage={isTargetRivalCard(rivalPokemon.id) ? currentDamage : 0}
             isCardAlive={isCardAlive}
-            // isDead={isTargetRivalCardDead(rivalPokemon.id)}
+          // isDead={isTargetRivalCardDead(rivalPokemon.id)}
           />
         )}
       </RivalCardsBlock>

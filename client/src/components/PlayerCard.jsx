@@ -2,21 +2,26 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function PlayerCard(props) {
-  const { pokemon, isChosenPlayerCard, onClick, isCardReadyToMove, hasCurrentAttackFinished, hasAttackFinished } = props;
-  const { spriteBack, name, health, speed, damage, id } = pokemon;
+export default function PlayerCard({
+    pokemon : { spriteBack, name, health, speed, damage, id },
+    isPlayerActiveCard,
+    onClick,
+    isCardReadyToMove,
+    // hasAttackFinished,
+    isCurrentAttackInProgress,
+  }) {
   const [percent, setPercent] = useState(0);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
-  // const [isCurrentlyChosenCard, setIsCurrentlyChosenCard] = useState(isChosenPlayerCard);
   const [currentHealth, setCurrentHealth] = useState(health);
   const [isAlive, setIsAlive] = useState(true);
+  // const [isCurrentlyChosenCard, setIsCurrentlyChosenCard] = useState(isChosenPlayerCard);
 
   useEffect(() => {
     if (isReadyToMove) {
-      isCardReadyToMove(true);
+      isCardReadyToMove(true, id);
     }
     else {
-      isCardReadyToMove(false);
+      isCardReadyToMove(false, id);
     }
   }, [isReadyToMove, isCardReadyToMove]);
 
@@ -28,13 +33,13 @@ export default function PlayerCard(props) {
   // }, [isReadyToMove, hasCurrentAttackFinished]);
 
   useEffect(() => {
-    console.log('hasAttackFinished in PlayerCard', hasAttackFinished);
-    if (hasAttackFinished) {
+    console.log('isCurrentAttackInProgress in PlayerCard', isCurrentAttackInProgress);
+    if (!isCurrentAttackInProgress) {
       console.log('percent', percent);
       setPercent(0);
       setIsReadyToMove(false);
     }
-  }, [hasAttackFinished])
+  }, [isCurrentAttackInProgress]);
 
   // useEffect(() => {
   //   if (!isReadyToMove) {
@@ -48,22 +53,26 @@ export default function PlayerCard(props) {
   // }, [isReadyToMove, hasCurrentAttackFinished]);
 
   useEffect(() => {
-    const increase = () => {
-      let newPercent = percent;
-
-      setTimeout(() => {
-        newPercent = percent + 50;
-
-        if (newPercent >= 100) {
-          newPercent = 100;
-          setIsReadyToMove(true);
-        }
-
-        setPercent(newPercent);
-      }, 2000);
-    };
-    increase();
-  }, [percent]);
+    if (!isReadyToMove) {
+      const increase = () => {
+        let newPercent = percent;
+  
+        setTimeout(() => {
+          // if (newPercent < 100) setIsReadyToMove(false);
+  
+          newPercent = percent + 50;
+  
+          if (newPercent >= 100) {
+            newPercent = 100;
+            setIsReadyToMove(true);
+          }
+  
+          setPercent(newPercent);
+        }, (10000 * 10) / speed);
+      };
+      increase();
+    }
+  }, [percent, isReadyToMove]);
 
   return (
     <Container>
@@ -71,7 +80,7 @@ export default function PlayerCard(props) {
         <PlayerCardPokemonContainer
           pokemonId={id}
           isReadyToMove={isReadyToMove}
-          isChosenCard={isChosenPlayerCard}
+          isPlayerActiveCard={isPlayerActiveCard}
           onClick={onClick}
         >
           <PlayerCardPokemonImgContainer>
@@ -129,7 +138,7 @@ justify-content: flex-end;
   cursor: pointer;
   `}
 
-  ${props => props.isChosenCard && css`
+  ${props => props.isPlayerActiveCard && css`
   background: #f0e4f9;
   border: 2px solid #9a14f3;
   cursor: pointer;

@@ -2,33 +2,47 @@ import { useState, useEffect } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function RivalCard(props) {
-  const { pokemon, isTargetRivalCard, onClick, currentDamage, isCardAlive } = props;
-  const { sprite, name, health, speed, damage, id } = pokemon;
+export default function RivalCard({
+  pokemon: { sprite, name, health, speed, damage, id },
+  isTargetRivalCard,
+  onClick,
+  currentDamage,
+  isRivalCardAlive,
+}) {
   const [percent, setPercent] = useState(0);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
+  const [isTargetCard, setIsTargetCard] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);
   const [isAlive, setIsAlive] = useState(true);
 
   useEffect(() => {
-    setCurrentHealth(currentHealth - currentDamage);
-    // console.log('currentDamage in Rival', currentDamage);
+    setIsTargetCard(isTargetRivalCard);
+    console.log('isTargetRivalCard in Rival', isTargetRivalCard);
     // console.log('currentHealth in Rival', currentHealth);
-  }, [currentDamage]);
+  }, [isTargetRivalCard]);
+
+  // useEffect(() => {
+  //   setCurrentHealth(currentHealth - currentDamage);
+  //   // console.log('currentDamage in Rival', currentDamage);
+  //   // console.log('currentHealth in Rival', currentHealth);
+  // }, [currentDamage]);
 
   useEffect(() => {
     if (currentHealth <= 0) {
       setCurrentHealth(0);
-      isCardAlive(false);
+      isRivalCardAlive(false, id);
       setIsAlive(false);
     }
+    setCurrentHealth(currentHealth - currentDamage);
+    
     // console.log(`${name} isAlive in Rival`, isAlive);
     // console.log(`${name} currentHealth in Rival`, currentHealth);
     // console.log('isCardAlive in Rival', isCardAlive(false));
-  }, [currentHealth, isCardAlive]);
+  }, [currentHealth, currentDamage, isRivalCardAlive]);
 
   useEffect(() => {
     const increase = () => {
+      // setIsReadyToMove(false);
       let newPercent = percent;
 
       setTimeout(() => {
@@ -37,7 +51,9 @@ export default function RivalCard(props) {
           newPercent = 100;
           setIsReadyToMove(true);
         }
-
+        // if (newPercent < 100) {
+        //   setIsReadyToMove(false);
+        // }
         setPercent(newPercent);
       }, 2000);
     };
@@ -50,8 +66,9 @@ export default function RivalCard(props) {
         <RivalCardPokemonContainer
           pokemonId={id}
           isReadyToMove={isReadyToMove}
-          isChosenCard={isTargetRivalCard}
+          isTargetCard={isTargetCard}
           onClick={onClick}
+          isAlive={isAlive}
           isDead={!isAlive}
         >
           <RivalCardPokemonImgContainer>
@@ -102,18 +119,30 @@ border: 2px solid #ccc;
 background-color: #e6e6e6;
 min-height: 230px;
 justify-content: flex-end;
-cursor: pointer;
+cursor: default;
+
+  // &:active {
+  // border: 2px solid red;
+  // background-color: pink;
+  // cursor: default;
+  // }
+
+  ${props => props.isTargetCard && css`
+  border: 2px solid red;
+  background-color: #ffd6d6;
+  cursor: default;
+  &:active {
+    border: 2px solid red;
+    background-color: pink;
+    cursor: default;
+  }
+  `}
 
   ${props => props.isReadyToMove && css`
   border: 2px solid #1a2dc4;
   background-color: #def0fd;
   `}
 
-  ${props => props.isChosenCard && css`
-  border: 2px solid red;
-  background-color: #ffd6d6;
-  cursor: default;
-  `}
 
   ${props => props.isDead && css`
   border: 2px solid black;

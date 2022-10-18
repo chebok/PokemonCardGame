@@ -88,7 +88,7 @@ export default function ProfilePage() {
             ))}
           </Space>
         </DeckWrapper>
-        <Button onClick={handleDeckEditing}>Edit deck</Button>
+        {/* <Button onClick={handleDeckEditing}>Edit deck</Button> */}
       </DeckContainer>
       <CardsCollection
         currentCollection={currentCollection}

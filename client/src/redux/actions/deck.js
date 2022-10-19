@@ -12,7 +12,6 @@ export const getDeck = (userId) => async (dispatch) => {
 
 export const getRandomDeck = () => async (dispatch) => {
   const response = await DeckService.getRandomDeck();
-  // console.log('response', response);
   dispatch({
     type: GET_RANDOM_DECK,
     payload: response,

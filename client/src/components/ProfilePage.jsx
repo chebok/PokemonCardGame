@@ -9,8 +9,7 @@ import { getCollection } from '../redux/actions/collection';
 import { getDeck } from '../redux/actions/deck';
 
 import PokeCard from './PokeCard';
-import PokeCardUnknown from './PokeCardUnknown';
-
+import CardsCollection from './CardsCollection';
 
 export default function ProfilePage() {
   const auth = useSelector((store) => store.auth);
@@ -19,12 +18,11 @@ export default function ProfilePage() {
   const { user } = auth;
   const { userDeck } = deck;
 
-  const [unknownPokemons, setUnknownPokemons] = useState(150);
   const [currentCollection, setCurrentCollection] = useState(collection);
   const [currentDeck, setCurrentDeck] = useState(userDeck);
   const [isDeckBeingEdited, setIsDeckBeingEdited] = useState(false);
   // const parentRef = useRef();
-  const [parent] = useAutoAnimate();
+  // const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,7 +40,6 @@ export default function ProfilePage() {
   useEffect(() => {
     setCurrentCollection(collection);
     setCurrentDeck(userDeck);
-    setUnknownPokemons(150 - collection.length);
   }, [userDeck, collection, dispatch, navigate]);
 
   // useEffect(() => {
@@ -64,7 +61,11 @@ export default function ProfilePage() {
 
   const handleDeckEditing = () => {
     setIsDeckBeingEdited(true);
-  }
+  };
+
+  const handleNewGameClick = () => {
+    navigate('/game');
+  };
 
   return (
     <ProfilePageContainer>
@@ -73,35 +74,25 @@ export default function ProfilePage() {
           <strong>Welcome, {user?.username}!</strong>
         </h3>
       </header>
+      <Button type="primary" onClick={handleNewGameClick}>New game</Button>
       <DeckContainer>
         <h2>My deck</h2>
         <DeckWrapper>
-          <Space size={[8, 16]} wrap ref={parent}>
+          <Space
+            size={[8, 16]}
+            wrap
+          // ref={parent}
+          >
             {currentDeck && currentDeck.map((pokemon) => (
               <PokeCard pokemon={pokemon} key={pokemon.id} onClick={removeFromDeck} />
             ))}
           </Space>
         </DeckWrapper>
-        <Button onClick={handleDeckEditing}>Edit deck</Button>
+        {/* <Button onClick={handleDeckEditing}>Edit deck</Button> */}
       </DeckContainer>
-      <CollectionContainer>
-        <h2>My collection</h2>
-        <CollectionWrapper>
-        <Space
-        size={[8, 16]}
-        wrap
-        style={{
-          justifyContent: 'center',
-        }}>
-          {currentCollection && currentCollection.map((pokemon) => (
-            <PokeCard pokemon={pokemon} key={pokemon.id} />
-          ))}
-          {Array(unknownPokemons).fill().map(() => (
-            <PokeCardUnknown />
-          ))}
-        </Space>
-        </CollectionWrapper>
-      </CollectionContainer>
+      <CardsCollection
+        currentCollection={currentCollection}
+      />
     </ProfilePageContainer>
   )
 };
@@ -109,7 +100,7 @@ export default function ProfilePage() {
 const ProfilePageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 10px 20px;
 `;
 
@@ -122,17 +113,4 @@ const DeckWrapper = styled.div`
   padding: 15px 30px;
   background-color: #ECECEC;
   margin-bottom: 20px;
-`;
-
-const CollectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 20px;
-  align-self: center;
-`;
-
-const CollectionWrapper = styled.div`
-  padding: 15px 30px;
-  background-color: #ECECEC;
 `;

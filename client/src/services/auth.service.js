@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/auth';
+const API_URL = 'http://localhost:5000/users';
 
 class AuthService {
   async login(username, password) {
@@ -22,7 +22,6 @@ class AuthService {
     if (response.data.accessToken) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
-    console.log('response.data', response.data);
     return response.data;
   }
 }

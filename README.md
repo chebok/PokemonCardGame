@@ -4,9 +4,9 @@ A real-time battle card game with asyncronous logic using promises and timers.
 ## Tech Stack
 ### Back-end
   - NodeJs
+  - TypeScript
   - Express
-  - MongoDB
-  - Web-sockets (planned)
+  - MongoDB + Mongoose
 
 ### Front-end
   - React
@@ -14,7 +14,6 @@ A real-time battle card game with asyncronous logic using promises and timers.
   - Redux, Redux-thunk
   - Ant Design
   - Styled Components
-  - Socket.io (planned)
   
 ## Team
   - Ekaterina Gnedenko - team lead, front-end
@@ -26,5 +25,5 @@ A real-time battle card game with asyncronous logic using promises and timers.
 - create .env accroding to the .env example
 - npm i in project directory
 - in project directory run two terminals simultaneuosly and run two commands:
--- `npm run dev` runs server app
--- `npm run client` runs client react app
+`npm run dev` (runs server app)
+`npm run client` (runs client react app)

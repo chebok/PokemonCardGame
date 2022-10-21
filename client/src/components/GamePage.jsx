@@ -22,7 +22,7 @@ export default function GamePage() {
   const [playerActiveCard, setPlayerActiveCard] = useState(null);
   const [targetRivalCard, setTargetRivalCard] = useState(null);
   const [battleMessage, setBattleMessage] = useState('Wait untill your pokemons are ready to move');
-  const [isPlayerCardReadyToMove, setIsPlayerCardReadyToMove] = useState(false); // ??? что проверяет этот стейт?
+  const [isPlayerReadyToMove, setIsPlayerReadyToMove] = useState(false); // ??? что проверяет этот стейт?
   const [currentDamage, setCurrentDamage] = useState(0);
   const [isTargetRivalCardAlive, setIsTargetRivalCardAlive] = useState(true);
   const [playerPreviousActiveCard, setPlayerPreviousActiveCard] = useState(null);
@@ -59,7 +59,7 @@ export default function GamePage() {
       setBattleMessage('Choose one of rival pokemons to attack');
     }
 
-    if (isPlayerCardReadyToMove) {
+    if (isPlayerReadyToMove) {
       console.log('HEREEEEEeeeeeeeeeeeeeeeeeee in Game in handlePlayerCardClick');
 
       setBattleMessage('Choose one of rival pokemons to attack');
@@ -71,10 +71,11 @@ export default function GamePage() {
 
     }
     // else {
+    //   return null;
     //   // console.log('in else in GAME in PlayerCardClick');
-    //   setHasAttackStarted(false);
-    //   console.log('hasAttackFinished in Game in else in PlayerCardClick', hasAttackFinished);
-    //   console.log('hasAttackStarted in Game in else in PlayerCardClick', hasAttackStarted);
+    //   // setHasAttackStarted(false);
+    //   // console.log('hasAttackFinished in Game in else in PlayerCardClick', hasAttackFinished);
+    //   // console.log('hasAttackStarted in Game in else in PlayerCardClick', hasAttackStarted);
     // }
   };
 
@@ -141,14 +142,15 @@ export default function GamePage() {
   };
 
   const isCardReadyToMove = (isReadyToMove, cardId) => {
+
     const foundPlayerCard = findCardById(userDeck, cardId);
     // console.log('foundPlayerCard in GAME in isPlayerCardReadyToMove', foundPlayerCard.name);
     // console.log('isReadyToMove in GAME isPlayerCardReadyToMove', isReadyToMove);
     // console.log('isPlayerCardReadyToMove in GAME isPlayerCardReadyToMove', isPlayerCardReadyToMove);
-
+    console.log('IsPlayerReadyToMove in checker', isPlayerReadyToMove);
     
     if (isReadyToMove) {
-      setIsPlayerCardReadyToMove(true);
+      setIsPlayerReadyToMove(true);
       setBattleMessage('Choose one of your pokemons to move');
 
       // console.log('foundPlayerCard in GAME in isPlayerCardReadyToMove', foundPlayerCard.name);

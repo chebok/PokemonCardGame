@@ -1,49 +1,102 @@
 import { useState, useEffect, Component } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import RivalCard from './RivalCard';
-import PlayerCard from './PlayerCard';
+import RivalCardNew from './RivalCardNew';
+import PlayerCardNew from './PlayerCardNew';
 import styled from 'styled-components';
 import { getDeck, getRandomDeck } from '../redux/actions/deck';
 import waitTimer from '../services/game/waitTimer';
 import botThinking from '../services/game/botThinking';
 import createPokemons from '../services/game/createPokemons';
 
-const cards1 = Array(3).fill({
+const userDeck = [{
   "id": "077",
-  "name": "Ponyta",
+  "name": "Ponyta1",
   "element": "Fire",
   "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
   "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/77.gif",
-  "spriteBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/77.gif",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
   "health": 34,
   "speed": 8,
   "damage": 10
-});
-
-const cards2 = Array(3).fill({
-  "id": "039",
-  "name": "Jigglypuff",
+},
+{
+  "id": "078",
+  "name": "Ponyta2",
   "element": "Fire",
   "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
   "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
-  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/39.gif",
-  "spriteBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/39.gif",
-  "health": 38,
-  "speed": 9,
-  "damage": 7,
-});
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "079",
+  "name": "Ponyt3",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+}];
+
+const randomDeck = [{
+  "id": "037",
+  "name": "JIDD1",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "038",
+  "name": "JUDD2",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "039",
+  "name": "JODD3",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+}];
+
+const findPokById = (deck, cardId) => {
+  const foundCard = deck.find((card) => card.id === cardId);
+  return foundCard;
+};
 
 export default class GameNew extends Component {
   constructor(props) {
     super(props);
     // const { cards1, cards2, difficulty } = this.props;
     this.state = {
-      playerPokemons: createPokemons(cards1).map((pok) => {
+      playerPokemons: createPokemons(userDeck).map((pok) => {
         waitTimer(pok);
         return pok;
       }),
-      botPokemons: createPokemons(cards2).map((pok) => {
+      botPokemons: createPokemons(randomDeck).map((pok) => {
         waitTimer(pok, this.botTurn.bind(this));
         return pok;
       }),
@@ -54,19 +107,22 @@ export default class GameNew extends Component {
     console.log('game created');
   }
 
-  turn(pokemon1, pokemon2, action = 'attack', cb1 = () => { }, cb2 = () => { }) {
-    const resultDamage = pokemon1[action](pokemon2);
-    pokemon2.takeDamage(resultDamage);
-    waitTimer(pokemon1, cb1, cb2);
-    const resultMessage = `Player's ${pokemon1.name} deals ${resultDamage} damage to ${pokemon2.name}.\n${pokemon2.name} ${pokemon2.isAlive}`;
-    console.log(resultMessage);
-    this.log.push(resultMessage);
-    this.isEnd();
+  turn(playerPokemon, rivalPokemon, action = 'attack', cb1 = () => { }, cb2 = () => { }) {
+    console.log('playerPokemon in turn', playerPokemon);
+    // const resultDamage = playerPokemon[action](rivalPokemon);
+    // rivalPokemon.takeDamage(resultDamage);
+    // waitTimer(playerPokemon, cb1, cb2);
+    // const resultMessage = `Player's ${playerPokemon.name} deals ${resultDamage} damage to ${rivalPokemon.name}.\n RivalPokemon ${rivalPokemon.name} is alive: ${rivalPokemon.isAlive}`;
+    // console.log(resultMessage);
+    // this.log.push(resultMessage);
+    // this.isEnd();
   }
 
-  botTurn(pokemon1) {
-    const [pokemon2, action] = botThinking(pokemon1, this);
-    this.turn(pokemon1, pokemon2, action, () => this.botTurn(pokemon1));
+  botTurn(botTargePlayerPokemon) {
+    console.log('botTargePlayerPokemon in turn', botTargePlayerPokemon);
+
+    // const [ botPokemon, action ] = botThinking(botTargePlayerPokemon, this);
+    // this.turn(botTargePlayerPokemon, botPokemon, action, () => this.botTurn(botTargePlayerPokemon));
   }
 
   isEnd() {
@@ -105,24 +161,36 @@ export default class GameNew extends Component {
 
   renderPlayerPokemons() {
     const playerPoks = this.state.playerPokemons;
-    const isCardReadyToMove = () => {
-      console.log('isCardReadyToMove');
-    }
+    // const isCardReadyToMove = () => {
+    //   console.log('isCardReadyToMove');
+    // }
+    console.log('playerPoks', playerPoks);
     console.log('playerPoks[0]', playerPoks[0]);
+
+    const isPlayerActivePok = (cardId) => {
+      const foundPlayerPok = findPokById(playerPoks, cardId);
+      return cardId === foundPlayerPok?.id ? true : false;
+    };
+
+    const handlePlayerCardClick = (cardId, e) => {
+      e.preventDefault();
+    // const foundPlayerPok = findPokById(playerPoks, cardId);
+    
+    };
 
     return (
       <>
         <PlayerCardsBlock>
           {playerPoks?.map((playerPokemon) =>
-            <PlayerCard
+            <PlayerCardNew
               pokemon={playerPokemon}
               key={playerPokemon.id}
               // onClick={(e) => handlePlayerCardClick(playerPokemon.id, e)}
               // isPlayerActiveCard={isPlayerActiveCard(playerPokemon.id)}
-              isCardReadyToMove={isCardReadyToMove}
+              // isCardReadyToMove={isCardReadyToMove}
               // isCurrentAttackInProgress={isCurrentAttackInProgress(playerPokemon.id)}
-              onClick={(e) => console.log('Player clicked on', playerPokemon.name, e)}
-              isPlayerActiveCard={false}
+              onClick={(e) => handlePlayerCardClick(playerPokemon.id, e)}
+              // isPlayerActiveCard={isPlayerActivePok(playerPokemon.id)}
               // isCardReadyToMove={false}
               isCurrentAttackInProgress={false}
             />
@@ -133,21 +201,21 @@ export default class GameNew extends Component {
   }
   renderBotPokemons() {
     const botPoks = this.state.botPokemons;
-    const isCardReadyToMove = () => {
-      console.log('isCardReadyToMove');
-    }
+    // const isCardReadyToMove = () => {
+    //   console.log('isCardReadyToMove');
+    // }
     console.log('botPoks[0]', botPoks[0]);
 
     return (
       <>
         <RivalCardsBlock>
           {botPoks?.map((playerPokemon) =>
-            <RivalCard
+            <RivalCardNew
               pokemon={playerPokemon}
               key={playerPokemon.id}
               // onClick={(e) => handlePlayerCardClick(playerPokemon.id, e)}
               // isPlayerActiveCard={isPlayerActiveCard(playerPokemon.id)}
-              isCardReadyToMove={isCardReadyToMove}
+              // isCardReadyToMove={isCardReadyToMove}
               // isCurrentAttackInProgress={isCurrentAttackInProgress(playerPokemon.id)}
               onClick={(e) => console.log('Player clicked on', playerPokemon.name, e)}
               isPlayerActiveCard={false}
@@ -163,12 +231,12 @@ export default class GameNew extends Component {
   render() {
     return (
       <>
-      <Container>
-        <div>GameNew</div>
-        {this.renderBotPokemons()}
-        {this.renderPlayerPokemons()}
-        {this.renderLog()}
-      </Container>
+        <Container>
+          <div>GameNew</div>
+          {this.renderBotPokemons()}
+          {this.renderPlayerPokemons()}
+          {this.renderLog()}
+        </Container>
       </>
     )
   }

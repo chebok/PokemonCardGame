@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-export default function PlayerCard({
+const PlayerCard = forwardRef((props, _ref) => {
+  const {
     pokemon : { spriteBack, name, health, speed, damage, id },
     isPlayerActiveCard,
     onClick,
     isCardReadyToMove,
     // hasAttackFinished,
     isCurrentAttackInProgress,
-  }) {
+  } = props;
   const [percent, setPercent] = useState(0);
   const [isReadyToMove, setIsReadyToMove] = useState(false);
   const [currentHealth, setCurrentHealth] = useState(health);
@@ -25,6 +26,14 @@ export default function PlayerCard({
     }
   }, [isReadyToMove, isCardReadyToMove]);
 
+  useImperativeHandle(_ref, () => ({
+    getName: () => {
+      return name;
+    },
+    getIsReadyToMove: () => {
+      return isReadyToMove;
+    },
+  }));
   // useEffect(() => {
   //   if (!isReadyToMove) {
   //     hasCurrentAttackFinished(true);
@@ -97,7 +106,9 @@ export default function PlayerCard({
       </PlayerCardContainer>
     </Container>
   )
-};
+});
+
+export default PlayerCard;
 
 const Container = styled.div`
 display: flex;

@@ -15,11 +15,11 @@ export default function RivalCard({
   const [currentHealth, setCurrentHealth] = useState(health);
   const [isAlive, setIsAlive] = useState(true);
 
-  // useEffect(() => {
-  //   setIsTargetCard(isTargetRivalCard);
-  //   console.log('isTargetRivalCard in Rival', isTargetRivalCard);
-  //   // console.log('currentHealth in Rival', currentHealth);
-  // }, [isTargetRivalCard]);
+  useEffect(() => {
+    setIsTargetCard(isTargetRivalCard);
+    console.log('isTargetRivalCard in RivalCardNew', isTargetRivalCard);
+    // console.log('currentHealth in Rival', currentHealth);
+  }, [isTargetRivalCard]);
 
   // useEffect(() => {
   //   setCurrentHealth(currentHealth - currentDamage);

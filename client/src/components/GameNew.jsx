@@ -219,7 +219,7 @@ export default class GameNew extends Component {
               // isCurrentAttackInProgress={isCurrentAttackInProgress(playerPokemon.id)}
               onClick={(e) => console.log('Player clicked on', playerPokemon.name, e)}
               isPlayerActiveCard={false}
-              // isCardReadyToMove={false}
+              isTargetRivalCard={false}
               isCurrentAttackInProgress={false}
             />
           )}

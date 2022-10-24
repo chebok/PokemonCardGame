@@ -11,6 +11,7 @@ import 'reflect-metadata';
 import { IUserController } from './users/users.controller.interface';
 import { ICollectionController } from './collection/coll.controller.interface';
 import { IDeckController } from './deck/deck.controller.interface';
+import { IConfigService } from './config/config.service.interface';
 
 @injectable()
 export class App {
@@ -24,10 +25,10 @@ export class App {
     @inject(TYPES.ExeptionFilter) private exeptionFilter: ExeptionFilter,
     @inject(TYPES.ICollectionController) private collectionController: ICollectionController,
     @inject(TYPES.IDeckController) private deckController: IDeckController,
+    @inject(TYPES.ConfigService) private configService: IConfigService,
     ) {
 		this.app = express();
-    dotenv.config();
-    this.port = Number(process.env.PORT) || 5000;
+    this.port = Number(this.configService.get('PORT')) || 8000;
 	}
 
   useMiddlewares() {

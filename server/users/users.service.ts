@@ -11,6 +11,7 @@ import { RolesService } from '../roles/roles.service';
 import { DeckService } from '../deck/deck.service';
 import { CollectionService } from '../collection/coll.service';
 import { CardsService } from '../cards/cards.service';
+import { IConfigService } from '../config/config.service.interface';
 
 @injectable()
 export class UsersService {
@@ -21,6 +22,7 @@ export class UsersService {
       @inject(TYPES.DeckService) private deckService: DeckService,
       @inject(TYPES.CollectionService) private collectiionService: CollectionService,
       @inject(TYPES.CardsService) private cardsService: CardsService,
+      @inject(TYPES.ConfigService) private configService: IConfigService,
     ) { }
 
     async createUser(dto: CreateUserDto): Promise<[null, LoginUserDto] | [string]> {
@@ -30,7 +32,8 @@ export class UsersService {
         if (candidate) {
           return ['Такой пользователь уже существует'];
         }
-        const hashPassword = bcrypt.hashSync(password, 7);
+        const salt = this.configService.get('SALT') || 8;
+        const hashPassword = bcrypt.hashSync(password, Number(salt));
         const { value } = await this.rolesService.getByValue('USER');
         const user: IUserModel = await this.usersRepository.create({ username, password: hashPassword, roles: [value] });
         const cards = await this.cardsService.generateRandomNumbers();

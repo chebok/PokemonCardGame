@@ -167,7 +167,7 @@ export default class GameNew extends Component {
     console.log('playerPoks', playerPoks);
     console.log('playerPoks[0]', playerPoks[0]);
 
-    const isPlayerActivePok = (cardId) => {
+    const isPlayerActiveCard = (cardId) => {
       const foundPlayerPok = findPokById(playerPoks, cardId);
       return cardId === foundPlayerPok?.id ? true : false;
     };

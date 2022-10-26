@@ -108,7 +108,7 @@ export default class GameNew extends Component {
   }
 
   turn(playerPokemon, rivalPokemon, action = 'attack', cb1 = () => { }, cb2 = () => { }) {
-    console.log('playerPokemon in turn', playerPokemon);
+    console.log('playerPokemon in turn is:', playerPokemon);
     // const resultDamage = playerPokemon[action](rivalPokemon);
     // rivalPokemon.takeDamage(resultDamage);
     // waitTimer(playerPokemon, cb1, cb2);
@@ -119,7 +119,7 @@ export default class GameNew extends Component {
   }
 
   botTurn(botTargePlayerPokemon) {
-    console.log('botTargePlayerPokemon in turn', botTargePlayerPokemon);
+    console.log('botTargePlayerPokemon in botTurn is:', botTargePlayerPokemon);
 
     // const [ botPokemon, action ] = botThinking(botTargePlayerPokemon, this);
     // this.turn(botTargePlayerPokemon, botPokemon, action, () => this.botTurn(botTargePlayerPokemon));
@@ -174,6 +174,14 @@ export default class GameNew extends Component {
 
     const handlePlayerCardClick = (cardId, e) => {
       e.preventDefault();
+      const foundPlayerPok = findPokById(playerPoks, cardId);
+
+      if (foundPlayerPok.isAlive && foundPlayerPok.isReadytoMove) {
+        isPlayerActiveCard(cardId);
+
+      }
+      // const playerPokemon = this.state.botPokemons.find((pokemon) => pokemon.isAlive);
+
     // const foundPlayerPok = findPokById(playerPoks, cardId);
     
     };

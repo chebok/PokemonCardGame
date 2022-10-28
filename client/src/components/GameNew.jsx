@@ -214,20 +214,39 @@ export default class GameNew extends Component {
     // }
     console.log('botPoks[0]', botPoks[0]);
 
+    const isTargetRivalCard = (cardId) => {
+      const foundPlayerPok = findPokById(botPoks, cardId);
+      return cardId === foundPlayerPok?.id ? true : false;
+    };
+
+    const handleRivalCardClick = (cardId, e) => {
+      e.preventDefault();
+      const foundPlayerPok = findPokById(botPoks, cardId);
+
+      if (foundPlayerPok.isAlive && foundPlayerPok.isReadytoMove) {
+        isTargetRivalCard(cardId);
+
+      }
+      // const playerPokemon = this.state.botPokemons.find((pokemon) => pokemon.isAlive);
+
+    // const foundPlayerPok = findPokById(playerPoks, cardId);
+    
+    };
+
     return (
       <>
         <RivalCardsBlock>
-          {botPoks?.map((playerPokemon) =>
+          {botPoks?.map((pokemon) =>
             <RivalCardNew
-              pokemon={playerPokemon}
-              key={playerPokemon.id}
-              // onClick={(e) => handlePlayerCardClick(playerPokemon.id, e)}
-              // isPlayerActiveCard={isPlayerActiveCard(playerPokemon.id)}
+              pokemon={pokemon}
+              key={pokemon.id}
+              // onClick={(e) => handlePlayerCardClick(pokemon.id, e)}
+              // isPlayerActiveCard={isPlayerActiveCard(pokemon.id)}
               // isCardReadyToMove={isCardReadyToMove}
-              // isCurrentAttackInProgress={isCurrentAttackInProgress(playerPokemon.id)}
-              onClick={(e) => console.log('Player clicked on', playerPokemon.name, e)}
+              // isCurrentAttackInProgress={isCurrentAttackInProgress(pokemon.id)}
+              onClick={(e) => handleRivalCardClick(pokemon.id, e)}
               isPlayerActiveCard={false}
-              isTargetRivalCard={false}
+              isTargetRivalCard={isTargetRivalCard(pokemon.id)}
               isCurrentAttackInProgress={false}
             />
           )}

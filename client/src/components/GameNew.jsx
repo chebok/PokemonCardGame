@@ -240,12 +240,8 @@ export default class GameNew extends Component {
             <RivalCardNew
               pokemon={pokemon}
               key={pokemon.id}
-              // onClick={(e) => handlePlayerCardClick(pokemon.id, e)}
-              // isPlayerActiveCard={isPlayerActiveCard(pokemon.id)}
-              // isCardReadyToMove={isCardReadyToMove}
-              // isCurrentAttackInProgress={isCurrentAttackInProgress(pokemon.id)}
               onClick={(e) => handleRivalCardClick(pokemon.id, e)}
-              isPlayerActiveCard={false}
+              // isPlayerActiveCard={false}
               isTargetRivalCard={isTargetRivalCard(pokemon.id)}
               isCurrentAttackInProgress={false}
             />

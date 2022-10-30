@@ -182,8 +182,8 @@ export default class GameNew extends Component {
       }
       // const playerPokemon = this.state.botPokemons.find((pokemon) => pokemon.isAlive);
 
-    // const foundPlayerPok = findPokById(playerPoks, cardId);
-    
+      // const foundPlayerPok = findPokById(playerPoks, cardId);
+
     };
 
     return (
@@ -227,10 +227,6 @@ export default class GameNew extends Component {
         isTargetRivalCard(cardId);
 
       }
-      // const playerPokemon = this.state.botPokemons.find((pokemon) => pokemon.isAlive);
-
-    // const foundPlayerPok = findPokById(playerPoks, cardId);
-    
     };
 
     return (
@@ -241,9 +237,6 @@ export default class GameNew extends Component {
               pokemon={pokemon}
               key={pokemon.id}
               onClick={(e) => handleRivalCardClick(pokemon.id, e)}
-              // isPlayerActiveCard={false}
-              isTargetRivalCard={isTargetRivalCard(pokemon.id)}
-              isCurrentAttackInProgress={false}
             />
           )}
         </RivalCardsBlock>

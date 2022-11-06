@@ -209,9 +209,6 @@ export default class GameNew extends Component {
   }
   renderBotPokemons() {
     const botPoks = this.state.botPokemons;
-    // const isCardReadyToMove = () => {
-    //   console.log('isCardReadyToMove');
-    // }
     console.log('botPoks[0]', botPoks[0]);
 
     const isTargetRivalCard = (cardId) => {

@@ -180,9 +180,6 @@ export default class GameNew extends Component {
         isPlayerActiveCard(cardId);
 
       }
-      // const playerPokemon = this.state.botPokemons.find((pokemon) => pokemon.isAlive);
-
-      // const foundPlayerPok = findPokById(playerPoks, cardId);
 
     };
 

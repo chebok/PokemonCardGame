@@ -23,11 +23,14 @@ import { DeckRepository } from './deck/deck.repo';
 import { DeckService } from './deck/deck.service';
 import { IDeckRepository } from './deck/deck.repo.interface';
 import { CardsService } from './cards/cards.service';
+import { IConfigService } from './config/config.service.interface';
+import { ConfigService } from './config/config.service';
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-  bind<ILogger>(TYPES.ILogger).to(LoggerService);
+  bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
+  bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
   bind<IUserController>(TYPES.IUserController).to(UserController);
-  bind<IExeptionFilter>(TYPES.ExeptionFilter).to(ExeptionFilter);
+  bind<IExeptionFilter>(TYPES.ExeptionFilter).to(ExeptionFilter).inSingletonScope();
   bind<App>(TYPES.Application).to(App);
   bind<UsersRepository>(TYPES.UsersRepository).to(UsersRepository);
   bind<UsersService>(TYPES.UsersService).to(UsersService);

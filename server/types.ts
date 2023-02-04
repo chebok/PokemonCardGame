@@ -14,4 +14,5 @@ export const TYPES = {
   DeckService: Symbol.for('DeckService'),
   IDeckRepository: Symbol.for('DeckRepository'),
   CardsService: Symbol.for('CardsService'),
+  ConfigService: Symbol.for('ConfigService'),
 }

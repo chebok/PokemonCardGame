@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { Server } from 'http';
+import swaggerUi from 'swagger-ui-express';
 import { ExeptionFilter } from './errors/exeption.filter';
 import { ILogger } from './logger/logger.interface';
 import { inject, injectable } from 'inversify';
@@ -36,6 +37,7 @@ export class App {
     credentials: true }))
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger.json')));
   }
 
 	useRoutes() {

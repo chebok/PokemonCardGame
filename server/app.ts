@@ -61,6 +61,7 @@ export class App {
       console.log(e);
     }
 		this.server = this.app.listen(this.port);
-		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
+    this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
+		this.logger.log(`Swagger доступен на http://localhost:${this.port}/api-docs/#`);
 	}
 }

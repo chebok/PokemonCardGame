@@ -1,38 +1,123 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RivalCard from './RivalCard';
 import PlayerCard from './PlayerCard';
 import styled from 'styled-components';
 import { getDeck, getRandomDeck } from '../redux/actions/deck';
 import ratio from '../services/game/ratio';
+import b1 from '../static/b1.gif';
+import b1back from '../static/b1back.gif';
 
 const findCardById = (deck, cardId) => {
   const foundCard = deck.find((card) => card.id === cardId);
   return foundCard;
 };
 
-export default function GamePage() {
-  const {
-    auth: { user },
-    deck: { userDeck, randomDeck }
-  } = useSelector((store) => store);
+const userDeck = [{
+  "id": "077",
+  "name": "Ponyta1",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "078",
+  "name": "Ponyta2",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "079",
+  "name": "Ponyt3",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+}];
 
-  const dispatch = useDispatch();
+const randomDeck = [{
+  "id": "037",
+  "name": "JIDD1",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "038",
+  "name": "JUDD2",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+},
+{
+  "id": "039",
+  "name": "JODD3",
+  "element": "Fire",
+  "legend": "If you’ve been accepted by Ponyta, its burning mane is mysteriously no longer hot to the touch.",
+  "image": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/077.png",
+  "sprite": "../static/b1.gif",
+  "spriteBack": "../static/b1back.gif",
+  "health": 34,
+  "speed": 8,
+  "damage": 10
+}];
+
+export default function GamePage() {
+  // const {
+  //   auth: { user },
+  //   deck: { userDeck, randomDeck }
+  // } = useSelector((store) => store);
+
+  // const dispatch = useDispatch();
 
   const [playerActiveCard, setPlayerActiveCard] = useState(null);
   const [targetRivalCard, setTargetRivalCard] = useState(null);
   const [battleMessage, setBattleMessage] = useState('Wait untill your pokemons are ready to move');
-  const [isPlayerCardReadyToMove, setIsPlayerCardReadyToMove] = useState(false); // ??? что проверяет этот стейт?
+  const [isPlayerReadyToMove, setIsPlayerReadyToMove] = useState(false); // ??? что проверяет этот стейт?
   const [currentDamage, setCurrentDamage] = useState(0);
-  const [isTargetRivalCardAlive, setIsTargetRivalCardAlive] = useState(true);
+  const [isAtLeastOneTargetRivalCardAlive, setIsAtLeastOneTargetRivalCardAlive] = useState(true);
   const [playerPreviousActiveCard, setPlayerPreviousActiveCard] = useState(null);
-  // const [hasAttackFinished, setHasAttackFinished] = useState(null);
+  // const [isCurrentlyClickedPlayerCardReadyToMove, setIsCurrentlyClickedPlayerCardReadyToMove] = useState(false);
 
-  useEffect(() => {
-    dispatch(getDeck(user.id));
-    dispatch(getRandomDeck());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getDeck(user.id));
+  //   dispatch(getRandomDeck());
+  // }, []);
+  
+  // const childStateRef = useRef();
+  // console.log(`childStateRef.current in childStateRef is: `, childStateRef);
 
+
+  // const getIsPokemonReadyToMoveState = () => {
+  //   const isPokemonReadyToMoveState = childStateRef.current.getIsReadyToMove();
+  //   const childName = childStateRef.current.getName();
+  //   console.log(`*******The CHILD state of ${childName} in getIsReadyToMove is: `, isPokemonReadyToMoveState);
+  // }
   // useEffect(() => {
   //   console.log('battleMessage', battleMessage);
   // }, [battleMessage])
@@ -52,16 +137,19 @@ export default function GamePage() {
   const handlePlayerCardClick = (cardId, e) => {
     e.preventDefault();
     const foundPlayerCard = findCardById(userDeck, cardId);
-    console.log(`clicked on ${foundPlayerCard.name}`);
-    // console.log(`isPlayerCardReadyToMove clicked on ${foundPlayerCard.name}`, isPlayerCardReadyToMove);
+
+    // const canMove = getIsPokemonReadyToMoveState();
+    // console.log(`*******The CHILD state in handlePlayerCardClick is: `, canMove);
 
     if (playerActiveCard) {
       setBattleMessage('Choose one of rival pokemons to attack');
     }
 
-    if (isPlayerCardReadyToMove) {
-      console.log('HEREEEEEeeeeeeeeeeeeeeeeeee in Game in handlePlayerCardClick');
-
+    if (isPlayerReadyToMove) {
+      console.log('=====>>>> in Game in handlePlayerCardClick');
+      console.log(`=====>>>> in Game in handlePlayerCardClick clicked on ${foundPlayerCard.name} and isPlayerReadyToMove is`, isPlayerReadyToMove);
+      
+      isCardReadyToMove()
       setBattleMessage('Choose one of rival pokemons to attack');
 
       setPlayerActiveCard(foundPlayerCard);
@@ -71,10 +159,11 @@ export default function GamePage() {
 
     }
     // else {
+    //   return null;
     //   // console.log('in else in GAME in PlayerCardClick');
-    //   setHasAttackStarted(false);
-    //   console.log('hasAttackFinished in Game in else in PlayerCardClick', hasAttackFinished);
-    //   console.log('hasAttackStarted in Game in else in PlayerCardClick', hasAttackStarted);
+    //   // setHasAttackStarted(false);
+    //   // console.log('hasAttackFinished in Game in else in PlayerCardClick', hasAttackFinished);
+    //   // console.log('hasAttackStarted in Game in else in PlayerCardClick', hasAttackStarted);
     // }
   };
 
@@ -89,7 +178,7 @@ export default function GamePage() {
 
   const handleRivalCardClick = (rivalCardId, e) => {
     e.preventDefault();
-    if (playerActiveCard && isTargetRivalCardAlive) {
+    if (playerActiveCard && isAtLeastOneTargetRivalCardAlive) {
       console.log('AAAAAAA HEre in handleRivalCardClick');
 
       const foundRivalCard = findCardById(randomDeck, rivalCardId);
@@ -140,20 +229,28 @@ export default function GamePage() {
     }
   };
 
+  const test = () => {
+
+  }
+
   const isCardReadyToMove = (isReadyToMove, cardId) => {
+
     const foundPlayerCard = findCardById(userDeck, cardId);
     // console.log('foundPlayerCard in GAME in isPlayerCardReadyToMove', foundPlayerCard.name);
     // console.log('isReadyToMove in GAME isPlayerCardReadyToMove', isReadyToMove);
     // console.log('isPlayerCardReadyToMove in GAME isPlayerCardReadyToMove', isPlayerCardReadyToMove);
-
+    console.log('IsPlayerReadyToMove in GAMEpage', isPlayerReadyToMove);
     
     if (isReadyToMove) {
-      setIsPlayerCardReadyToMove(true);
-      setBattleMessage('Choose one of your pokemons to move');
+
+      setIsPlayerReadyToMove(true);
+      // setBattleMessage('Choose one of your pokemons to move');
+      // return true;
 
       // console.log('foundPlayerCard in GAME in isPlayerCardReadyToMove', foundPlayerCard.name);
       // console.log('isPlayerCardReadyToMove in GAME isPlayerCardReadyToMove', isPlayerCardReadyToMove);
     }
+    // return false;
     // else {
     //   setIsPlayerCardReadyToMove(false);
     // }
@@ -166,9 +263,9 @@ export default function GamePage() {
   const isRivalCardAlive = (isRivalCardAlive, rivalCardId) => {
     const foundRivalCard = findCardById(randomDeck, rivalCardId);
     if (isRivalCardAlive) {
-      setIsTargetRivalCardAlive(true);
+      setIsAtLeastOneTargetRivalCardAlive(true);
     }
-    console.log('isTargetRivalCardAlive in ISCArDALIVE', isTargetRivalCardAlive);
+    console.log('isTargetRivalCardAlive in ISCArDALIVE', isAtLeastOneTargetRivalCardAlive);
   };
 
   const attack = (activeCard, targetCard) => {
@@ -178,11 +275,11 @@ export default function GamePage() {
     return resultDamage;
   }
 
-  // const takeDamage = (attackingCard, targetCard, damage) => {
-  //   const resultDamage = attackingCard.damage * ratio(attackingCard.element, targetCard.element);
-  //   console.log(`${attackingCard.name} dealt ${resultDamage} to ${targetCard.name}`);
-  //   return resultDamage;
-  // }
+  const takeDamage = (attackingCard, targetCard, damage) => {
+    const resultDamage = attackingCard.damage * ratio(attackingCard.element, targetCard.element);
+    console.log(`${attackingCard.name} dealt ${resultDamage} to ${targetCard.name}`);
+    return resultDamage;
+  }
   // const takeDamage = (currentHealth) => {
   //   const newHealth = currentHealth - currentDamage;
   //   return newHealth;
@@ -214,6 +311,7 @@ export default function GamePage() {
             isPlayerActiveCard={isPlayerActiveCard(playerPokemon.id)}
             isCardReadyToMove={isCardReadyToMove}
             isCurrentAttackInProgress={isCurrentAttackInProgress(playerPokemon.id)}
+            // ref={childStateRef}
             // hasAttackFinished={hasAttackFinished}
           />
         )}

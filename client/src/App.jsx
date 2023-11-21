@@ -8,6 +8,7 @@ import RegisterPage from './components/RegisterPage';
 import GamePage from './components/GamePage';
 
 import './App.css';
+import GameNew from './components/GameNew';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           </Route>
         </Route>
         <Route path='game' element={<GamePage />} />
+        <Route path='gameNew' element={<GameNew />} />
         <Route path='register' element={<RegisterPage />} />
         <Route path='login' element={<LoginPage />} />
       </Routes>

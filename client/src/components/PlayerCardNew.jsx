@@ -2,38 +2,30 @@ import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Progress } from 'antd';
 import styled, { css } from 'styled-components';
 
-const PlayerCard = forwardRef((props, _ref) => {
+const PlayerCard = forwardRef((props) => {
   const {
-    pokemon : { spriteBack, name, health, speed, damage, id },
+    pokemon : { spriteBack, name, health, speed, damage, id, isReadyToMove },
     isPlayerActiveCard,
     onClick,
-    isCardReadyToMove,
+    // isCardReadyToMove,
     // hasAttackFinished,
-    isCurrentAttackInProgress,
+    // isCurrentAttackInProgress,
   } = props;
   const [percent, setPercent] = useState(0);
-  const [isReadyToMove, setIsReadyToMove] = useState(false);
+  const [isPoKReadyToMove, setIsReadyToMove] = useState(isReadyToMove);
   const [currentHealth, setCurrentHealth] = useState(health);
   const [isAlive, setIsAlive] = useState(true);
   // const [isCurrentlyChosenCard, setIsCurrentlyChosenCard] = useState(isChosenPlayerCard);
 
-  useEffect(() => {
-    if (isReadyToMove) {
-      isCardReadyToMove(true, id);
-    }
-    else {
-      isCardReadyToMove(false, id);
-    }
-  }, [isReadyToMove, isCardReadyToMove]);
+  // useEffect(() => {
+  //   if (isReadyToMove) {
+  //     isCardReadyToMove(true, id);
+  //   }
+  //   else {
+  //     isCardReadyToMove(false, id);
+  //   }
+  // }, [isReadyToMove, isCardReadyToMove]);
 
-  useImperativeHandle(_ref, () => ({
-    getName: () => {
-      return name;
-    },
-    getIsReadyToMove: () => {
-      return isReadyToMove;
-    },
-  }));
   // useEffect(() => {
   //   if (!isReadyToMove) {
   //     hasCurrentAttackFinished(true);
@@ -41,14 +33,14 @@ const PlayerCard = forwardRef((props, _ref) => {
   //   }
   // }, [isReadyToMove, hasCurrentAttackFinished]);
 
-  useEffect(() => {
-    console.log('isCurrentAttackInProgress in PlayerCard', isCurrentAttackInProgress);
-    if (!isCurrentAttackInProgress) {
-      console.log('percent', percent);
-      setPercent(0);
-      setIsReadyToMove(false);
-    }
-  }, [isCurrentAttackInProgress]);
+  // useEffect(() => {
+  //   console.log('isCurrentAttackInProgress in PlayerCard', isCurrentAttackInProgress);
+  //   if (!isCurrentAttackInProgress) {
+  //     console.log('percent', percent);
+  //     setPercent(0);
+  //     setIsReadyToMove(false);
+  //   }
+  // }, [isCurrentAttackInProgress]);
 
   // useEffect(() => {
   //   if (!isReadyToMove) {
@@ -62,7 +54,7 @@ const PlayerCard = forwardRef((props, _ref) => {
   // }, [isReadyToMove, hasCurrentAttackFinished]);
 
   useEffect(() => {
-    if (!isReadyToMove) {
+    if (!isPoKReadyToMove) {
       const increase = () => {
         let newPercent = percent;
   
@@ -81,14 +73,14 @@ const PlayerCard = forwardRef((props, _ref) => {
       };
       increase();
     }
-  }, [percent, isReadyToMove]);
+  }, [percent, isPoKReadyToMove]);
 
   return (
     <Container>
       <PlayerCardContainer>
         <PlayerCardPokemonContainer
           pokemonId={id}
-          isReadyToMove={isReadyToMove}
+          isReadyToMove={isPoKReadyToMove}
           isPlayerActiveCard={isPlayerActiveCard}
           onClick={onClick}
         >

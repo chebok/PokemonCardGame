@@ -1,12 +1,15 @@
 import ratio from './ratio.js';
 
 class Pokemon {
-  constructor(name, element, health, damage, speed) {
+  constructor(id, name, element, health, damage, speed, sprite, spriteBack) {
+    this.id = id;
     this.name = name;
     this.element = element;
     this.health = health;
     this.damage = damage;
     this.speed = speed;
+    this.sprite = sprite;
+    this.spriteBack = spriteBack;
     this.isAlive = true;
     this.isReadyToMove = false;
   }
